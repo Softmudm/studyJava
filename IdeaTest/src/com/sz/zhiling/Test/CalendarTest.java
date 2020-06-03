@@ -17,14 +17,14 @@ public class CalendarTest {
         int nyear = calendar.get(calendar.YEAR);//获得今天所属年份
         int nmonth = (calendar.get(calendar.MONTH)+1);//获得今天所属月份
         int nday = calendar.get(calendar.DAY_OF_MONTH);//获得今天所在这个月的日
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//MM要大写不能小写mm
         String showDay = "1970-01-01";
         if(month<10){//这里调整年月日格式，小于10月的月份前要加0，不然getTime()方法得出的是错误的。
             showDay = year+"-0"+month+"-01";//输入的那一个月
         }else{
             showDay = year+"-"+month+"-01";
         }
-        long countDay = 1L;
+        long countDay = 1;//这里是加一天算出正确天数
         try{
             Date showDate = simpleDateFormat.parse(showDay);
             countDay += showDate.getTime()/(1000*60*60*24);//转化为毫秒数，用来计算和1970-01-01的天数
