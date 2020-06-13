@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" herf="img/title.ico" type="img/x-icon"/>
+    <title>中国铁路12306</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 120px;
+        }
+        .wrapper{
+            width: 1190px;
+            height: 80px;
+            margin: 0 auto;
+            padding: 0 5px;
+        }
+        .wrapper img{
+            margin-top: 15px;
+            float: left;
+        }
+        .up{
+            width: 1190px;
+            height: 80px;
+        }
+        .up-right{
+            width: 890px;
+            height: 40px;
+            margin-top: 24px;
+            float: right;
+            background: #F8F8F8;
+        }
+        .search-box{
+            width: 450px;
+            height: 30px;
+            margin: 5px 0 0 100px;
+            float: left;
+        }
+        .search-box input{
+            width: 398px;
+            height: 20px;
+            float: left;
+            border: 1px solid #efefef;
+            padding: 4px 10px;
+            background: #fff;
+            font-size: 14px;
+            line-height: 20px;
+        }
+        .search-box img{
+            width: 30px;
+            height: 30px;
+            float: right;
+            margin: auto;
+        }
+        .user-menu{
+            float: right;
+            padding-right: 10px;
+            font-size: 12px ;
+            list-style: none;
+        }
+        .user-menu li{
+            float: left;
+            margin-left: 10px;
+        }
+        .user-menu a{
+            color: #3B99FB;
+            text-decoration: none;
+        }
+        .user-menu1{
+        }
+        .down{
+            width: 100%;
+            height: 40px;
+            background: #3b99fc;
+        }
+        .nav{
+            width: 1190px;
+            height: 100%;
+            margin: 0 auto;
+            list-style: none;
+            font-size: 14px;
+        }
+        .nav li{
+            width: 12%;
+            float: left;
+            color: #ffffff;
+            text-align: center;
+            line-height: 40px;
+        }
+        .mainbox{
+            width: 980px;
+            min-height: 620px;
+            margin: 0 auto;
+            font-size: 12px;
+        }
+        .maintop{
+            height: 32px;
+            line-height: 32px;
+        }
+        .main{
+        }
+        .maintitle{
+            height: 32px;
+            line-height: 32px;
+            font-size: 14px;
+            padding-left: 20px;
+            color: #e5f8ff;
+            background: #2A8DCD;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .main form{
+            background: #ffffff;
+            border: 1px solid #1678be;
+        }
+        .main ul{
+            padding-left: 0;
+            padding-top: 40px;
+            list-style: none;
+        }
+        .main li{
+            height: 30px;
+            line-height: 30px;
+            margin-bottom: 5px;
+        }
+        .r-label{
+            height: 100%;
+            width: 375px;
+            float: left;
+            text-align: right;
+            margin-right: 5px;
+        }
+        .must{
+            font-size: 16px;
+            color: #ff0000;
+            margin-right: 2px;
+            vertical-align: middle;
+        }
+        .r-txt{
+            float: left;
+        }
+        .main input{
+            height: 18px;
+            width: 195px;
+            border: 1px solid #cfcdc7;
+            padding: 5px 0 5px 5px;
+            font-size: 12px;
+        }
+        .r-tips{
+            color: #FF7F00;
+            float: left;
+            margin-left: 8px;
+        }
+        .m1{
+            width: 40px;
+            height: 6px;
+            background: #ff0000;
+            margin-right: 1px;
+            display: inline-block;
+        }
+        .m2{
+            width: 40px;
+            height: 6px;
+            background: #999999;
+            margin-right: 1px;
+            display: inline-block;
+        }
+        .main select{
+            height: 30px;
+            width: 202px;
+            border: 1px solid #cfcdc7;
+            padding: 5px 0 5px 5px;
+            font-size: 12px;
+        }
+        #jmsfz{
+            height: 90px;
+        }
+        #jmsfz input{
+            line-height: 30px;
+            height: 14px;
+            width: 14px;
+            vertical-align: -3px;
+        }
+        #xy input{
+            line-height: 30px;
+            height: 14px;
+            width: 14px;
+            vertical-align: -3px;
+        }
+        .subbuttonbox{
+            margin: 50px 0;
+            height: 30px;
+            text-align: center;
+        }
+        .subbuttonbox input{
+            width: 142px;
+            height: 30px;
+            color: #ffffff;
+            background: #ff8000;
+            border-radius: 5px;
+        }
+        .footer{
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="wrapper">
+        <div class="up">
+            <img src="img/logo.png"/>
+            <div class="up-right">
+                <div class="search-box">
+                    <input type="text" placeholder="搜索车票/餐饮/常旅客/相关规章">
+                    <img src="img/search.jpg">
+                </div>
+                <ul class="user-menu">
+                    <li class="user-menu1">
+                        <a href="#">我的12306</a>
+                    </li>
+                    <li style="color: #3B99FB">|</li>
+                    <li>
+                        您好，请
+                        <a href="#">登录</a>
+                        <a style="margin-left: 10px">注册</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="down">
+        <ul class="nav">
+            <li>首页</li>
+            <li>车票</li>
+            <li>团购服务</li>
+            <li>会员服务</li>
+            <li>站车服务</li>
+            <li>商旅服务</li>
+            <li>出行指南</li>
+            <li>信息查询</li>
+        </ul>
+    </div>
+</div>
+<div class="mainbox">
+    <div class="maintop">
+        您现在的位置：
+        <a>客运首页</a>
+        &nbsp;>&nbsp;
+        <a>注册</a>
+    </div>
+    <div class="main">
+        <div class="maintitle">
+            账户信息
+        </div>
+        <form>
+            <ul>
+                <li>
+                    <div class="r-label"><span class="must">*</span>用 户 名：</div>
+                    <div class="r-txt">
+                        <input placeholder="用户名设置成功后不可修改">
+                    </div>
+                    <div class="r-tips">6-30位字母、数字或“_”,字母开头</div>
+                </li>
+                <li>
+                    <div class="r-label"><span class="must">*</span>登录密码</div>
+                    <div class="r-txt">
+                        <input placeholder="6-20位字母、数字或符号">
+                    </div>
+                    <div class="r-tips">
+                        <span class="m1"></span>
+                        <span class="m2"></span>
+                        <span class="m2"></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="r-label"><span class="must">*</span>确认密码：</div>
+                    <div class="r-txt">
+                        <input placeholder="再次输入您的登录密码">
+                    </div>
+                    <div class="r-tips"></div>
+                </li>
+                <li>
+                    <div class="r-label"><span class="must">*</span>证件类型：</div>
+                    <div class="r-txt">
+                        <select>
+                            <option value="0" selected="1">中国居民身份证</option>
+                            <option value="1">港澳居民来往内地通行证</option>
+                            <option value="2">台湾居民来往大陆通行证</option>
+                            <option value="3">护照</option>
+                        </select>
+                    </div>
+                    <div class="r-tips"></div>
+                </li>
+                <li id="jmsfz">
+                    <div class="r-label"></div>
+                    <div class="r-txt">
+                        <span style="display: block;">
+                            <input name="idTypeRadio" type="radio" checked="checked" value="0" />
+                            <label>中国居民身份证</label>
+                        </span>
+                        <span style="display: block;">
+                            <input name="idTypeRadio" type="radio" value="1" />
+                            <label>外国人永久居留身份证</label>
+                        </span>
+                        <span style="display: block;">
+                            <input name="idTypeRadio" type="radio" value="2" />
+                            <label>港澳台居民居住证</label>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="r-label"><span class="must">*</span>姓 名</div>
+                    <div class="r-txt">
+                        <input placeholder="请输入姓名">
+                    </div>
+                    <div class="r-tips">姓名填写规则（用于身份核验，请正确填写）</div>
+                </li>
+                <li>
+                    <div class="r-label"><span class="must">*</span>证件号码：</div>
+                    <div class="r-txt">
+                        <input placeholder="请输入您的证件号码">
+                    </div>
+                    <div class="r-tips">（用于身份核验，请正确填写）</div>
+                </li>
+                <li>
+                    <div class="r-label"><span class="must">*</span>邮 箱：</div>
+                    <div class="r-txt">
+                        <input placeholder="请正确填写邮箱地址">
+                    </div>
+                    <div class="r-tips"></div>
+                </li>
+                <li>
+                    <div class="r-label"><span class="must">*</span>手机号码（+86）：</div>
+                    <div class="r-txt">
+                        <input placeholder="请输入您的手机号码">
+                    </div>
+                    <div class="r-tips">请正确填写手机号码，稍后将向该手机号码发送短信验证码</div>
+                </li>
+                <li>
+                    <div class="r-label"><span class="must">*</span>旅客类型：</div>
+                    <div class="r-txt">
+                        <select>
+                            <option value="0" selected="1">成人</option>
+                            <option value="1">儿童</option>
+                            <option value="2">学生</option>
+                            <option value="3">残疾军人、伤残人民警察</option>
+                        </select>
+                    </div>
+                    <div class="r-tips"></div>
+                </li>
+                <li id="xy">
+                    <div class="r-label"></div>
+                    <div class="r-txt">
+                        <input type="checkbox">
+                        <span style="font-size: 14px;">我已阅读并同意遵守</span>
+                        <a style="font-size: 14px;text-decoration: none;" href="#">《中国铁路客户服务中心网站服务条款》</a>
+                        <a style="font-size: 14px;text-decoration: none;" href="#">《隐私权政策》</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="subbuttonbox">
+                <input type="button" value="下一步">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="footer">
+    <img src="img/footer.jpg">
+</div>
+</body>
+</html>
