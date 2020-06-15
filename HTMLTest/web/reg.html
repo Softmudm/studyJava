@@ -12,6 +12,9 @@
         .header{
             width: 100%;
             height: 120px;
+            background-image: url("img/train1.png");
+            background-repeat: no-repeat;
+            background-position: right 24px;
         }
         .wrapper{
             width: 1190px;
@@ -32,7 +35,7 @@
             height: 40px;
             margin-top: 24px;
             float: right;
-            background: #F8F8F8;
+            background-image: url("img/train.png");
         }
         .search-box{
             width: 450px;
@@ -41,12 +44,11 @@
             float: left;
         }
         .search-box input{
-            width: 398px;
+            width: 88%;
             height: 20px;
             float: left;
             border: 1px solid #efefef;
             padding: 4px 10px;
-            background: #fff;
             font-size: 14px;
             line-height: 20px;
         }
@@ -205,6 +207,7 @@
         }
         .footer{
             margin-top: 40px;
+            text-align: center;
         }
     </style>
 </head>
@@ -215,8 +218,8 @@
             <img src="img/logo.png"/>
             <div class="up-right">
                 <div class="search-box">
-                    <input type="text" placeholder="搜索车票/餐饮/常旅客/相关规章">
                     <img src="img/search.jpg">
+                    <input type="text" placeholder="搜索车票/餐饮/常旅客/相关规章">
                 </div>
                 <ul class="user-menu">
                     <li class="user-menu1">
@@ -266,7 +269,7 @@
                     <div class="r-tips">6-30位字母、数字或“_”,字母开头</div>
                 </li>
                 <li>
-                    <div class="r-label"><span class="must">*</span>登录密码</div>
+                    <div class="r-label"><span class="must">*</span>登录密码：</div>
                     <div class="r-txt">
                         <input placeholder="6-20位字母、数字或符号">
                     </div>
@@ -313,7 +316,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="r-label"><span class="must">*</span>姓 名</div>
+                    <div class="r-label"><span class="must">*</span>姓 名：</div>
                     <div class="r-txt">
                         <input placeholder="请输入姓名">
                     </div>
