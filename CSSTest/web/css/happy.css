@@ -1,0 +1,405 @@
+body{
+    margin: 0 10px;
+    padding: 0;
+}
+.header{
+    /*width: 1349px;*/
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 54px;
+    background-image: url("../img/background.jpg");
+    background-size: 43px;
+}
+.headleft{
+    float: left;
+}
+.header img{
+    height: 54px;
+}
+.sybox{
+    float: left;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    color: #e13e48;
+    font-weight: 700;
+    background: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-left: 30px;
+    margin-top: 14px;
+    text-align: center;
+}
+.headright{
+    float: right;
+    color: white;
+    margin-right: 40px;
+}
+.headright ul{
+    list-style: none;
+}
+.headright li{
+    float: left;
+    margin-left: 15px;
+}
+.headright a{
+    text-decoration: none;
+    color: white;
+}
+.headright span{
+    margin-left: 15px;
+}
+.main{
+    margin-top: 65px;
+}
+.up{
+    width: 100%;
+    height: 310px;
+    margin: 15px 0;
+}
+.upleft{
+    float: left;
+    border: 1px solid #D5D5D5;
+    width: 253px;
+    height: 100%;
+}
+.upleft ul{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    list-style: none;
+    background-image: url("../img/gameBg1.jpg");
+    background-size: 254px;
+}
+.upleft li{
+    height: 12.5%;
+    line-height: 39px;
+    text-indent: 45px;
+    font-size: 14px;
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: 10px center;
+}
+.upleft a{
+    text-decoration: none;
+    color: black;
+}
+.upmiddle{
+    float: left;
+    border: 1px solid #D5D5D5;
+    width: 702px;
+    height: 100%;
+    margin: 0 15px;
+}
+.upmiddle a{
+    height: 100%;
+}
+.upmiddle img{
+    height: 100%;
+    width: 100%;
+}
+.upright{
+    float: right;
+    border: 1px solid #D5D5D5;
+    width: 338px;
+    height: 100%;
+    background: #f4f4f4;
+}
+.upright-title{
+    font-weight: 700;
+    color: #83818d;
+    text-indent: 25px;
+    height: 75px;
+    line-height: 75px;
+}
+.upright-up{
+    margin: 10px 0;
+    height: 30px;
+    line-height: 30px;
+}
+.upright label{
+    margin-left: 25px;
+}
+.upright input{
+    border: 1px solid #D5D5D5;
+    height: 20px;
+    margin-left: 15px;
+}
+#upright-down{
+    margin: 10px 0;
+    height: 80px;
+    line-height: 90px;
+}
+#upright-down input{
+    height: 30px;
+    width: 75px;
+    margin-left: 80px;
+    background-image: url("../img/btnLogin.jpg");
+    background-size: 73px;
+}
+.udu{
+    margin-right: 66px;
+    margin-top: -25px;
+    padding: 0;
+    float: right;
+    list-style: none;
+}
+.udu a{
+    text-decoration: none;
+}
+.udl{
+    height: 20px;
+    width: 80px;
+    margin-top: 3px;
+    font-size: 14px;
+}
+.down{
+    width: 100%;
+    height: 864px;
+    margin: 15px 0;
+}
+.downleft{
+    float: left;
+    width: 973px;
+    height: 100%;
+}
+.downleftup{
+    height: 300px;
+}
+.downleftdown{
+    height: 564px;
+}
+.title1{
+    border: 1px solid #D5D5D5;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    background-image: url("../img/titleBg.jpg");
+    background-size: 10px;
+}
+.title1>span{
+    float: left;
+    margin-left: 12px;
+    font-weight: 900;
+    color: #ce1b39;
+}
+.title1 ul{
+    float: left;
+    margin: 0 0 0 20px;
+    list-style: none;
+}
+.title1 li{
+    float: left;
+}
+.title1 a{
+    text-decoration: none;
+    color: #81838D;
+    margin-left: 10px;
+}
+.fgf{
+    margin-left: 10px;
+}
+.content1{
+    border: 1px solid #D5D5D5;
+    border-top: none;
+    padding: 20px;
+    height: 222px;
+    width: 933px;
+}
+.game1{
+    float: left;
+    border: 1px solid #D5D5D5;
+    margin: 20px;
+    width: 423px;
+    height: 180px;
+}
+.game1content{
+    width: 100%;
+    height: 100%;
+    margin: 5px 5px 15px 5px;
+    background-repeat: no-repeat;
+    background-size: 220px 165px;
+}
+.js{
+    width: 190px;
+    height: 100%;
+    float: right;
+}
+.game1content h3{
+    margin: 5px 0 10px 0;
+    padding: 0;
+    color: #ce1b39;
+}
+.game1content p{
+    margin: 0;
+}
+.game1content span{
+    margin: 0;
+    color: #ce1b39;
+}
+.game1content button{
+    margin-top: 5px;
+    border: none;
+    background-repeat: no-repeat;
+    background-size: 80px 26px;
+    height: 26px;
+    width: 80px;
+}
+.content2{
+    border: 1px solid #D5D5D5;
+    border-top: none;
+    padding: 0 20px;
+    height: 525px;
+    width: 933px;
+}
+.game2{
+    height: 280px;
+    width: 900px;
+    margin: 0 auto;
+}
+.game2 ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+.game2 li{
+    margin:0 20px;
+    float:left;
+    height: 500px;
+    width: 183px
+}
+.game2content{
+    margin-top: 20px;
+    width: 100%;
+    height: 235px;
+    background-repeat: no-repeat;
+    background-size: 160px 94px;
+    text-align: center;
+}
+.game2content img{
+    width: 183px;
+}
+.game2content h3{
+    margin: 5px 0 10px 0;
+    padding: 0;
+    color: #ce1b39;
+}
+.game2content p{
+    margin: 0;
+}
+.game2content span{
+    margin: 0;
+    color: #ce1b39;
+}
+.game2content button{
+    margin-top: 5px;
+    border: none;
+    background-repeat: no-repeat;
+    background-size: 80px 26px;
+    height: 26px;
+    width: 80px;
+}
+.downright{
+    float: left;
+    margin-left: 15px;
+    width: 337px;
+    height: 100%;
+}
+.downrightup{
+    width: 337px;
+    height: 489px;
+}
+.content3{
+    width: 337px;
+    height: 450px;
+    border: 1px solid #D5D5D5;
+    border-top: none;
+}
+.content3 ul{
+    margin: 0;
+    padding:10px 0 0 0;
+    list-style: none;
+}
+.content3 li{
+    margin: 0;
+    padding: 0;
+    background-image: url("../img/btn-04.gif");
+    background-repeat: no-repeat;
+    background-position: 10px;
+    height: 16px;
+    font-size: 14px;
+    line-height: 16px;
+    text-indent: 60px;
+}
+.content3 a{
+    text-decoration: none;
+    color: #83818d;
+}
+.content3 hr{
+    margin: 10px 0;
+    border: 1px dashed #D5D5D5;
+}
+.downrightdown{
+    margin-top: 15px;
+    width: 337px;
+    height: 336px;
+}
+.content4{
+    width: 337px;
+    height: 320px;
+    border: 1px solid #D5D5D5;
+    border-top: none;
+}
+.content4 ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding: 20px 10px;
+}
+.content4 li{
+    margin: 0;
+    padding: 0;
+}
+.content4 hr{
+    margin: 20px 0;
+    border: 1px dashed #D5D5D5;
+}
+.content4 img{
+    width: 175px;
+}
+.c4out{
+    width: 135px;
+    float: right;
+}
+.c4out a{
+    font-size: 14px;
+    text-decoration: none;
+    line-height: 35px;
+}
+.footer{
+    margin: 0;
+    width: 100%;
+    height: 35px;
+    line-height: 25px;
+    font-size: 14px;
+}
+.footer ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.footer li{
+    float: left;
+    margin-right: 20px;
+}
+.footer a{
+    text-decoration: none;
+}
+.footer label{
+    float: right;
+    margin-left: 15px;
+    color: #83818d;
+}

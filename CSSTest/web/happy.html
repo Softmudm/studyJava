@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>开心网</title>
+    <link href="css/happy.css" rel="stylesheet" type="text/css">
+    <style>
+        /*body{
+            margin: 0 10px;
+            padding: 0;
+        }
+        .header{
+            !*width: 1349px;*!
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 54px;
+            background-image: url("img/background.jpg");
+            background-size: 43px;
+        }
+        .headleft{
+            float: left;
+        }
+        .header img{
+            height: 54px;
+        }
+        .sybox{
+            float: left;
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            color: #e13e48;
+            font-weight: 700;
+            background: white;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            margin-left: 30px;
+            margin-top: 14px;
+            text-align: center;
+        }
+        .headright{
+            float: right;
+            color: white;
+            margin-right: 40px;
+        }
+        .headright ul{
+            list-style: none;
+        }
+        .headright li{
+            float: left;
+            margin-left: 15px;
+        }
+        .headright a{
+            text-decoration: none;
+            color: white;
+        }
+        .headright span{
+            margin-left: 15px;
+        }
+        .main{
+            margin-top: 65px;
+        }
+        .up{
+            width: 100%;
+            height: 310px;
+            margin: 15px 0;
+        }
+        .upleft{
+            float: left;
+            border: 1px solid #D5D5D5;
+            width: 253px;
+            height: 100%;
+        }
+        .upleft ul{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            list-style: none;
+            background-image: url("img/gameBg1.jpg");
+            background-size: 254px;
+        }
+        .upleft li{
+            height: 12.5%;
+            line-height: 39px;
+            text-indent: 45px;
+            font-size: 14px;
+            background-repeat: no-repeat;
+            background-size: 25px;
+            background-position: 10px center;
+        }
+        .upleft a{
+            text-decoration: none;
+            color: black;
+        }
+        .upmiddle{
+            float: left;
+            border: 1px solid #D5D5D5;
+            width: 702px;
+            height: 100%;
+            margin: 0 15px;
+        }
+        .upmiddle a{
+            height: 100%;
+        }
+        .upmiddle img{
+            height: 100%;
+            width: 100%;
+        }
+        .upright{
+            float: right;
+            border: 1px solid #D5D5D5;
+            width: 338px;
+            height: 100%;
+            background: #f4f4f4;
+        }
+        .upright-title{
+            font-weight: 700;
+            color: #83818d;
+            text-indent: 25px;
+            height: 75px;
+            line-height: 75px;
+        }
+        .upright-up{
+            margin: 10px 0;
+            height: 30px;
+            line-height: 30px;
+        }
+        .upright label{
+            margin-left: 25px;
+        }
+        .upright input{
+            border: 1px solid #D5D5D5;
+            height: 20px;
+            margin-left: 15px;
+        }
+        #upright-down{
+            margin: 10px 0;
+            height: 80px;
+            line-height: 90px;
+        }
+        #upright-down input{
+            height: 30px;
+            width: 75px;
+            margin-left: 80px;
+            background-image: url("img/btnLogin.jpg");
+            background-size: 73px;
+        }
+        .udu{
+            margin-right: 66px;
+            margin-top: -25px;
+            padding: 0;
+            float: right;
+            list-style: none;
+        }
+        .udu a{
+            text-decoration: none;
+        }
+        .udl{
+            height: 20px;
+            width: 80px;
+            margin-top: 3px;
+            font-size: 14px;
+        }
+        .down{
+            width: 100%;
+            height: 864px;
+            margin: 15px 0;
+        }
+        .downleft{
+            float: left;
+            width: 973px;
+            height: 100%;
+        }
+        .downleftup{
+            height: 300px;
+        }
+        .downleftdown{
+            height: 564px;
+        }
+        .title1{
+            border: 1px solid #D5D5D5;
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            background-image: url("img/titleBg.jpg");
+            background-size: 10px;
+        }
+        .title1>span{
+            float: left;
+            margin-left: 12px;
+            font-weight: 900;
+            color: #ce1b39;
+        }
+        .title1 ul{
+            float: left;
+            margin: 0 0 0 20px;
+            list-style: none;
+        }
+        .title1 li{
+            float: left;
+        }
+        .title1 a{
+            text-decoration: none;
+            color: #81838D;
+            margin-left: 10px;
+        }
+        .fgf{
+            margin-left: 10px;
+        }
+        .content1{
+            border: 1px solid #D5D5D5;
+            border-top: none;
+            padding: 20px;
+            height: 222px;
+            width: 933px;
+        }
+        .game1{
+            float: left;
+            border: 1px solid #D5D5D5;
+            margin: 20px;
+            width: 423px;
+            height: 180px;
+        }
+        .game1content{
+            width: 100%;
+            height: 100%;
+            margin: 5px 5px 15px 5px;
+            background-repeat: no-repeat;
+            background-size: 220px 165px;
+        }
+        .js{
+            width: 190px;
+            height: 100%;
+            float: right;
+        }
+        .game1content h3{
+            margin: 5px 0 10px 0;
+            padding: 0;
+            color: #ce1b39;
+        }
+        .game1content p{
+            margin: 0;
+        }
+        .game1content span{
+            margin: 0;
+            color: #ce1b39;
+        }
+        .game1content button{
+            margin-top: 5px;
+            border: none;
+            background-repeat: no-repeat;
+            background-size: 80px 26px;
+            height: 26px;
+            width: 80px;
+        }
+        .content2{
+            border: 1px solid #D5D5D5;
+            border-top: none;
+            padding: 0 20px;
+            height: 525px;
+            width: 933px;
+        }
+        .game2{
+            height: 280px;
+            width: 900px;
+            margin: 0 auto;
+        }
+        .game2 ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        .game2 li{
+            margin:0 20px;
+            float:left;
+            height: 500px;
+            width: 183px
+        }
+        .game2content{
+            margin-top: 20px;
+            width: 100%;
+            height: 235px;
+            background-repeat: no-repeat;
+            background-size: 160px 94px;
+            text-align: center;
+        }
+        .game2content img{
+            width: 183px;
+        }
+        .game2content h3{
+            margin: 5px 0 10px 0;
+            padding: 0;
+            color: #ce1b39;
+        }
+        .game2content p{
+            margin: 0;
+        }
+        .game2content span{
+            margin: 0;
+            color: #ce1b39;
+        }
+        .game2content button{
+            margin-top: 5px;
+            border: none;
+            background-repeat: no-repeat;
+            background-size: 80px 26px;
+            height: 26px;
+            width: 80px;
+        }
+        .downright{
+            float: left;
+            margin-left: 15px;
+            width: 337px;
+            height: 100%;
+        }
+        .downrightup{
+            width: 337px;
+            height: 489px;
+        }
+        .content3{
+            width: 337px;
+            height: 450px;
+            border: 1px solid #D5D5D5;
+            border-top: none;
+        }
+        .content3 ul{
+            margin: 0;
+            padding:10px 0 0 0;
+            list-style: none;
+        }
+        .content3 li{
+            margin: 0;
+            padding: 0;
+            background-image: url("img/btn-04.gif");
+            background-repeat: no-repeat;
+            background-position: 10px;
+            height: 16px;
+            font-size: 14px;
+            line-height: 16px;
+            text-indent: 60px;
+        }
+        .content3 a{
+            text-decoration: none;
+            color: #83818d;
+        }
+        .content3 hr{
+            margin: 10px 0;
+            border: 1px dashed #D5D5D5;
+        }
+        .downrightdown{
+            margin-top: 15px;
+            width: 337px;
+            height: 336px;
+        }
+        .content4{
+            width: 337px;
+            height: 320px;
+            border: 1px solid #D5D5D5;
+            border-top: none;
+        }
+        .content4 ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            padding: 20px 10px;
+        }
+        .content4 li{
+            margin: 0;
+            padding: 0;
+        }
+        .content4 hr{
+            margin: 20px 0;
+            border: 1px dashed #D5D5D5;
+        }
+        .content4 img{
+            width: 175px;
+        }
+        .c4out{
+            width: 135px;
+            float: right;
+        }
+        .c4out a{
+            font-size: 14px;
+            text-decoration: none;
+            line-height: 35px;
+        }
+        .footer{
+            margin: 0;
+            width: 100%;
+            height: 35px;
+            line-height: 25px;
+            font-size: 14px;
+        }
+        .footer ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .footer li{
+            float: left;
+            margin-right: 20px;
+        }
+        .footer a{
+            text-decoration: none;
+        }
+        .footer label{
+            float: right;
+            margin-left: 15px;
+            color: #83818d;
+        }*/
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="headleft">
+            <img src="img/gameLogo.jpg">
+        </div>
+        <div class="sybox">首页</div>
+        <div class="headright">
+            <ul>
+                <li><a href="#">注册</a><span>|</span></li>
+                <li><a href="#">登录</a><span>|</span></li>
+                <li><a href="#">帮助</a><span>|</span></li>
+                <li><a href="#">更多</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="main">
+        <div class="up">
+            <div class="upleft">
+                <ul>
+                    <a href="#"><li style="background-image: url('img/sub-1.gif');">侠客世界</li></a>
+                    <a href="#"><li style="background-image: url('img/sub-2.gif');">征战四方</li></a>
+                    <a href="#"><li style="background-image: url('img/sub-3.gif');">龙将</li></a>
+                    <a href="#"><li style="background-image: url('img/sub-4.gif');">弹弹堂</li></a>
+                    <a href="#"><li style="background-image: url('img/sub-5.gif');">凡人修真2</li></a>
+                    <a href="#"><li style="background-image: url('img/sub-6.gif');">一骑当先</li></a>
+                    <a href="#"><li style="background-image: url('img/sub-7.gif');">宫廷计</li></a>
+                    <a href="#"><li style="background-image: url('img/sub-8.gif');">神仙道</li></a>
+                </ul>
+            </div>
+            <div class="upmiddle">
+                <a href="http://www.baidu.com"target="_blank"><img src="img/img-3.jpg"></a>
+            </div>
+            <div class="upright">
+                <div class="upright-title">
+                    开心网用户登录
+                </div>
+                <div>
+                    <form method="post" action="#">
+                        <div class="upright-up">
+                            <label>账号:</label>
+                            <input type="text">
+                        </div>
+                        <div class="upright-up">
+                            <label>密码:</label>
+                            <input type="password">
+                        </div>
+                        <div id="upright-down">
+                            <input type="submit" value="">
+                            <ul class="udu">
+                                <a href="#"><li class="udl">立即注册</li></a>
+                                <a href="#"><li class="udl">忘记密码</li></a>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="down">
+            <div class="downleft">
+                <div class="downleftup">
+                    <div class="title1">
+                        <span>全部游戏</span>
+                        <ul>
+                            <li><a href="#">战争策略</a><span class="fgf">|</span></li>
+                            <li><a href="#">体育经营</a><span class="fgf">|</span></li>
+                            <li><a href="#">社交游戏</a></li>
+                        </ul>
+                    </div>
+                    <div class="content1">
+                        <div class="game1">
+                            <div class="game1content" style="background-image: url('img/img-4.jpg')">
+                                <div class="js">
+                                    <h3>龙将</h3>
+                                    <p>三国题材横版RPG网游，丰富的武将系统</p>
+                                    <p>类型:&nbsp;&nbsp;角色扮演</p>
+                                    <p>游戏人气:&nbsp;&nbsp;<span>470921</span></p>
+                                    <button style="background-image: url('img/btn-02.jpg')"></button>
+                                    <button style="background-image: url('img/btn-03.jpg')"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game1">
+                            <div class="game1content" style="background-image: url('img/img-5.jpg')">
+                                <div class="js">
+                                    <h3>征战四方</h3>
+                                    <p>一款不建主城不等CD，不占资源全程战斗</p>
+                                    <p>类型:&nbsp;&nbsp;战争策略/p>
+                                    <p>游戏人气:&nbsp;&nbsp;<span>8745221</span></p>
+                                    <button style="background-image: url('img/btn-02.jpg')"></button>
+                                    <button style="background-image: url('img/btn-03.jpg')"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="downleftdown">
+                    <div class="title1">
+                        <span>角色扮演</span>
+                    </div>
+                    <div class="content2">
+                        <div class="game2">
+                            <ul>
+                                <li>
+                                    <div class="game2content">
+                                        <img src="img/img-6.jpg">
+                                        <h3>神仙道</h3>
+                                        <p>游戏人气:&nbsp;1765314</p>
+                                        <p>游戏状态:&nbsp;<span>22区开启</span></p>
+                                        <button style="background-image: url('img/btn-02.jpg')"></button>
+                                        <button style="background-image: url('img/btn-03.jpg')"></button>
+                                    </div>
+                                    <div class="game2content">
+                                        <img src="img/img-10.jpg">
+                                        <h3>龙将</h3>
+                                        <p>游戏人气:&nbsp;178501</p>
+                                        <p>游戏状态:&nbsp;<span>火爆开启</span></p>
+                                        <button style="background-image: url('img/btn-02.jpg')"></button>
+                                        <button style="background-image: url('img/btn-03.jpg')"></button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="game2content">
+                                        <img src="img/img-7.jpg">
+                                        <h3>征战四方</h3>
+                                        <p>游戏人气:&nbsp;1245814</p>
+                                        <p>游戏状态:&nbsp;<span>23区开启</span></p>
+                                        <button style="background-image: url('img/btn-02.jpg')"></button>
+                                        <button style="background-image: url('img/btn-03.jpg')"></button>
+                                    </div>
+                                    <div class="game2content">
+                                        <img src="img/img-11.jpg">
+                                        <h3>一球成名</h3>
+                                        <p>游戏人气:&nbsp;983014</p>
+                                        <p>游戏状态:&nbsp;<span>2服开启</span></p>
+                                        <button style="background-image: url('img/btn-02.jpg')"></button>
+                                        <button style="background-image: url('img/btn-03.jpg')"></button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="game2content">
+                                        <img src="img/img-8.jpg">
+                                        <h3>一骑当先</h3>
+                                        <p>游戏人气:&nbsp;1232158</p>
+                                        <p>游戏状态:&nbsp;<span>25区开启</span></p>
+                                        <button style="background-image: url('img/btn-02.jpg')"></button>
+                                        <button style="background-image: url('img/btn-03.jpg')"></button>
+                                    </div>
+                                    <div class="game2content">
+                                        <img src="img/img-12.jpg">
+                                        <h3>凡人修真</h3>
+                                        <p>游戏人气:&nbsp;745214</p>
+                                        <p>游戏状态:&nbsp;<span>4服开启</span></p>
+                                        <button style="background-image: url('img/btn-02.jpg')"></button>
+                                        <button style="background-image: url('img/btn-03.jpg')"></button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="game2content">
+                                        <img src="img/img-9.jpg">
+                                        <h3>洪荒神话</h3>
+                                        <p>游戏人气:&nbsp;123745</p>
+                                        <p>游戏状态:&nbsp;<span>18区开启</span></p>
+                                        <button style="background-image: url('img/btn-02.jpg')"></button>
+                                        <button style="background-image: url('img/btn-03.jpg')"></button>
+                                    </div>
+                                    <div class="game2content">
+                                        <img src="img/img-13.jpg">
+                                        <h3>傲视天地</h3>
+                                        <p>游戏人气:&nbsp;654814</p>
+                                        <p>游戏状态:&nbsp;<span>火爆开启</span></p>
+                                        <button style="background-image: url('img/btn-02.jpg')"></button>
+                                        <button style="background-image: url('img/btn-03.jpg')"></button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="downright">
+                <div class="downrightup">
+                    <div class="title1"><span>新闻公告</span></div>
+                    <div class="content3">
+                        <ul>
+                            <li><a href="#">[征战四方] 开心首服.黄巾之乱</a></li>
+                            <hr>
+                            <li><a href="#">[龙将] 火爆8服.八门金</a></li>
+                            <hr>
+                            <li><a href="#">[弹弹堂] 41服开启.万人竞技</a></li>
+                            <hr>
+                            <li><a href="#">[凡人修真2] 03月08日.四海帝王</a></li>
+                            <hr>
+                            <li><a href="#">[一骑当先] 开心2服上线送黄金</a></li>
+                            <hr>
+                            <li><a href="#">[宫廷计] 03月06日.西施秘史</a></li>
+                            <hr>
+                            <li><a href="#">[神仙道] 03月05日.玄净魔影</a></li>
+                            <hr>
+                            <li><a href="#">[千军破] 48服.登录送史诗名将</a></li>
+                            <hr>
+                            <li><a href="#">[大唐行镖] 全球唯一走镖页游</a></li>
+                            <hr>
+                            <li><a href="#">[范特西篮球] 疯狂纽约来啦!</a></li>
+                            <hr>
+                            <li><a href="#">[一球成名] 27服开服.王者之战</a></li>
+                            <hr>
+                            <li><a href="#">[凡人修真2] 03月08日.四海帝王</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="downrightdown">
+                    <div class="title1"><span>游戏视频</span></div>
+                    <div class="content4">
+                        <ul>
+                            <li>
+                                <img src="img/img-1.jpg">
+                                <div class="c4out">
+                                    <a href="#">《航海之王》麻辣炫酷反穿越，英雄时尚大变身!</a>
+                                </div>
+                            </li>
+                            <hr>
+                            <li>
+                                <img src="img/img-2.jpg">
+                                <div class="c4out">
+                                    <a href="#">《弹弹堂》吴克群同名激情主题MV，体验修真乐趣!</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <ul>
+            <li><a href="#">关于我们</a></li>
+            <li><a href="#">手机版</a></li>
+            <li><a href="#">开放平台</a></li>
+            <li><a href="#">自助广告</a></li>
+            <li><a href="#">招聘</a></li>
+            <li><a href="#">客服</a></li>
+            <li><a href="#">帮助</a></li>
+        </ul>
+        <label>京公网安备110000000003号&nbsp;未成年人家长监护</label>
+        <label>京ICP证080482号</label>
+        <label>文网文[2009]157号</label>
+        <label>@2013开心网</label>
+    </div>
+</body>
+</html>
