@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<script>
+    function cut(){
+        var a = new Array("方铁鹏","曹立志","曾海洋","蒋定志","刘厚军","卢彪","唐益志","谢远福","曾文高",
+            "吉坤坤","李小兴","李绪隆","廖保健","刘杨","肖灿龙","肖名金","胡莉莉","廖喜斌","罗俊峰","杨益昌",
+            "钟振煜","黄奕泓","周胜铭","李忆源","张斌","陶伟","王泓植","钟国唯","易敏","崔颖","林湘钧","钱太平",
+            "俞前","赵鹏","朱绍粮","李森华","代金林","方碧波","王鑫","吴奇文","尹向阳");
+        var i = Math.floor((Math.random()*40));
+        document.getElementById("zj").innerText=a[i];
+    }
+    var b;
+    function begin(){
+        b = setInterval("cut()",10);
+    }
+
+    finish = function() {
+        clearInterval(b);
+    }
+</script>
+<body>
+    <h3>获得一等奖的是：</h3>
+    <h4 id="zj" style="align-items: center"></h4>
+<button style="float: left" onclick="begin();">开始摇奖</button>
+<button style="float: left" onclick="finish();">停止摇奖</button>
+</body>
+</html>
