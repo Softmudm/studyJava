@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册成功页面</title>
+    <style>
+        .c1{
+            color: red;
+        }
+        .c2{
+            color: #00ccee;
+        }
+        .c3{
+            color: orange;
+        }
+        input{
+            border: 1px solid red;
+        }
+        .i1{
+            border: 1px solid #00ccee;
+        }
+        .i2{
+            border: 1px solid orange;
+        }
+    </style>
+</head>
+<body onload="pp()">
+<h3>注册成功页面</h3>
+<p id="transmit" class="c1"></p>
+<input id="ib" type="text"/>
+<input type="button" value="变蓝色" style="background-color: #00ccee" onclick="changeB()"/>
+<input type="button" value="变橘色" style="background-color: orange" onclick="changeO()"/>
+</body>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        function pp(){
+            var str = window.location.href;
+            debugger;
+            var i = str.indexOf("?");
+            var arrs = str.slice(i+1,str.length);
+            document.getElementById("transmit").innerText = arrs;
+        }
+        function changeB() {
+            //$("#transmit").css("color","#00ccee");
+            $("#ib").attr("class","i1");
+        }
+        function changeO() {
+            //$("#transmit").css("color","orange");
+            $("#ib").attr("class","i2");
+        }
+    </script>
+</html>
