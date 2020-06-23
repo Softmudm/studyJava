@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片轮播2.0</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            width: 690px;
+            height: 330px;
+            margin: 30px auto;
+            position: relative;
+        }
+        ul{
+            list-style: none;
+        }
+        .img li{
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        img{
+            width: 690px;
+            height: 330px;
+        }
+        .foot-num{
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            bottom: 10px;
+        }
+        .foot-num li{
+            display: inline-block;
+            margin: 0 20px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        .btn{
+            position: absolute;
+            width: 30px;
+            height: 75px;
+            background-color: white;
+            line-height: 75px;
+            font-size: 20px;
+            text-align: center;
+            font-weight: 900;
+            margin-top: 150px;
+            opacity: 0.9;/*透明度*/
+            cursor: pointer;/*设置鼠标样式*/
+        }
+        .left-btn{
+            left: 0;
+        }
+        .left-btn span{
+            margin-left: -20px;
+        }
+        .right-btn{
+            right: 0;
+        }
+        .right-btn span{
+            margin-right: -20px;
+        }
+        .sel{
+            background-color: #66ccff!important;;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <ul class="img">
+            <li><img src="img/0.jpg"></li>
+            <li><img src="img/1.jpg"></li>
+            <li><img src="img/2.jpg"></li>
+            <li><img src="img/3.jpg"></li>
+            <li><img src="img/4.jpg"></li>
+        </ul>
+        <ul class="foot-num">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="left-btn btn"><span>〈</span></div>
+        <div class="right-btn btn"><span>〉</span></div>
+    </div>
+</body>
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    var index = 4;
+    $(".foot-num li").mouseover(function(){
+        debugger;
+        $(this).addClass("sel").siblings().removeClass("sel");
+        index = $(this).index()
+        $(".img li").eq(index).stop().fadeIn(1000).siblings().stop().fadeOut(1000);
+    })
+    function move(){
+        $(".foot-num li").eq(index).addClass("sel").siblings().removeClass("sel");
+        $(".img li").eq(index).stop().fadeIn(1000).siblings().stop().fadeOut(1000);
+    }
+    function moveR(){
+        index = (++index)%5;
+        move();
+    }
+    function moveL(){
+        index = (index+4)%5;
+        move();
+    }
+    var lb = setInterval("moveR()",2000);
+    $(".main").hover(
+        function () {
+            clearInterval(lb);
+        },
+        function () {
+            lb = setInterval("moveR()",2000);
+        })
+    $(".left-btn").click(function(){
+        moveL();
+    })
+    $(".right-btn").click(function(){
+        moveR();
+    })
+    $(move)
+</script>
+</html>

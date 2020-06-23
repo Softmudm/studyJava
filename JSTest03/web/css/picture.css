@@ -1,0 +1,29 @@
+#main{
+    width: 690px;
+    height: 330px;
+    background-image: url("../img/0.jpg");
+    background-repeat: no-repeat;
+    background-size: 690px 330px;
+    margin: 30px auto;
+}
+.down{
+    position: absolute;
+    width: 600px;
+    height: 20px;
+    margin: 298px 44px 10px;
+}
+.down ul{
+    list-style: none;
+    margin-left: 125px;
+}
+.down li{
+    float: left;
+    margin-left: 20px;
+    width: 30px;
+    height: 8px;
+    background-color: #999999;
+    display: inline-block;
+}
+#img0{
+    background-color: #66ccff;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全选练习</title>
+    <link rel="stylesheet" href="css/table.css">
+</head>
+<body>
+    <div class="t1">
+        <table cellspacing="0" class="tb1">
+            <tr class="tr1">
+                <th class="c1"><input id="all" type="checkbox"></th>
+                <th class="c1">姓名</th>
+                <th class="c1">性别</th>
+                <th class="c3">卡号</th>
+                <th class="c1">会员级别</th>
+                <th class="c2">电话号码</th>
+                <th class="c2">出生年月日</th>
+                <th class="c2">消费金额</th>
+                <th class="c2"><a href="#" onclick="show()">新增</a></th>
+            </tr>
+            <tr>
+                <td class="c1"><input type="checkbox"></td>
+                <td class="c1">张三1</td>
+                <td class="c1">男</td>
+                <td class="c3">6365654315321321</td>
+                <td class="c1">短工</td>
+                <td class="c2">18625455412</td>
+                <td class="c2">1995-12-09</td>
+                <td class="c2">10,000,00</td>
+                <td class="c2"><a href="#"><img name="update" src="img/update.jpg"></a><a href="#"><img name="delete" src="img/del.jpg"></a></td>
+            </tr>
+            <tr>
+                <td class="c1"><input type="checkbox"></td>
+                <td class="c1">张三2</td>
+                <td class="c1">男</td>
+                <td class="c3">6365654315321321</td>
+                <td class="c1">短工</td>
+                <td class="c2">18625455412</td>
+                <td class="c2">1995-12-09</td>
+                <td class="c2">10,000,00</td>
+                <td class="c2"><a href="#"><img name="update" src="img/update.jpg"></a><a href="#"><img name="delete" src="img/del.jpg"></a></td>
+            </tr>
+            <tr>
+                <td class="c1"><input type="checkbox"></td>
+                <td class="c1">张三3</td>
+                <td class="c1">男</td>
+                <td class="c3">6365654315321321</td>
+                <td class="c1">短工</td>
+                <td class="c2">18625455412</td>
+                <td class="c2">1995-12-09</td>
+                <td class="c2">10,000,00</td>
+                <td class="c2"><a href="#"><img name="update" src="img/update.jpg"></a><a href="#"><img name="delete" src="img/del.jpg"></a></td>
+            </tr>
+        </table>
+    </div>
+    <div id="frame">
+        <div class="bg1">
+        </div>
+        <div class="tc1">
+            <div class="head">
+                <span>增加窗口</span>
+                <div class="head-right"><a href="#" onclick="hid()">X</a></div>
+            </div>
+            <div class="bd">
+                <table cellspacing="0" class="tb1">
+                    <thead>
+                    <tr class="tr1">
+                        <th class="c1">姓名</th>
+                        <th class="c1">性别</th>
+                        <th class="c3">卡号</th>
+                        <th class="c1">会员级别</th>
+                        <th class="c2">电话号码</th>
+                        <th class="c2">出生年月日</th>
+                        <th class="c2">消费金额</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td class="c1"><input id="name"></td>
+                        <td class="c1"><input id="sex"></td>
+                        <td class="c3"><input id="cardNum"></td>
+                        <td class="c1"><input id="vipLevel"></td>
+                        <td class="c2"><input id="phoneNum" type="tel"></td>
+                        <td class="c2"><input id="birthday" type="date"></td>
+                        <td class="c2"><input id="cost"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="foot">
+                <button onclick="hid()">取消</button>
+                <button onclick="confirm1()">确认</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/table.js"></script>
+</html>
