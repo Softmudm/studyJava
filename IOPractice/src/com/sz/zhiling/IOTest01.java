@@ -7,25 +7,32 @@ public class IOTest01 {
         /**
          * 字节流
          */
-        /*File file = new File("3.txt");
-        System.out.println(file.list());
-        StringBuffer str = new StringBuffer("D:");
-        File f2 = null;
-        for (int i = 0; i < 3 ; i++) {
-            str.append("/"+i);
-            f2 = new File(str.toString());
-            f2.mkdirs();
-            for(int j =4;j<7;j++){
-                str.append("/"+i+j);
-                f2 = new File(str.toString());
-                f2.mkdirs();
+        File ff1 = new File("1.txt");
+        InputStream f1 = null;
+        OutputStream f2 = null;
+        try {
+            f1 = new FileInputStream(ff1);
+            f2 = new FileOutputStream(new File("2.txt"));
+            int i = f1.read();
+            while(i!=-1){
+                System.out.println((char)i);
+                f2.write(i);
+                i = f1.read();
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
             try {
-                File.createTempFile("我是第"+i,".txt",f2);
+                f2.flush();
+                f2.close();
+                f1.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
+
         /**
          * 字符流
          */
