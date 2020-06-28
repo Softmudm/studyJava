@@ -3,16 +3,16 @@ $(".list1").hover(function () {
 },function () {
     $(this).css("background-image","");
 })
-var i = 0;
 $(".list1").click(function () {
+    debugger;
     let index = $(this).index()/2;
     $(".list2").eq(index).slideToggle();
-    if(i == 0){
+    let src = $(this).children().prop("src");
+    let i = src.substring(src.lastIndexOf("/")+1,src.lastIndexOf("/")+2);
+    if(i == "+"){
         $(".list1 img").eq(index).prop("src","img/-.jpg");
-        i = 1;
     }else{
         $(".list1 img").eq(index).prop("src","img/+.jpg");
-        i = 0;
     }
 })
 $($(".list2").toggle())
