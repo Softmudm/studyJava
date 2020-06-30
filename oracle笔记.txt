@@ -1,4 +1,4 @@
-Oracle数据库
+﻿Oracle数据库
 
 
 一.创建表空间和用户
@@ -28,21 +28,21 @@ Oracle数据库
   ( 
   列名1 数据类型，
   列名2 数据类型，
-  )						--创建表
+  )				--创建表
   drop table 表名称 		--删除表
 
 3.操作表结构
 注释
   comment on table/column 表名称/表名称.列名称 is '注释内容'
 列
-  				   add (列名 数据类型);    --增加列
+  		   add (列名 数据类型);    --增加列
   alter table 表名 drop (列名 数据类型);   --删除列
-				   modify (列名 数据类型); --修改列
+		   modify (列名 数据类型); --修改列
 约束
-										  primary key (列名); --主键约束
-										  foreign key (列名); --外键约束
+					   primary key (列名); --主键约束
+					   foreign key (列名); --外键约束
   alter table 表名 add constraint 约束名称 unique (列名);      --唯一约束
-  										  check (列名>xx);	  --检查约束
+  					   check (列名>xx);    --检查约束
   删除约束
   alter table 表名 drop constraint 约束名称
 
@@ -97,11 +97,11 @@ DQL语言
 select [distinct] 列名 [as 列别名]
 	from 表名1 [as 表别名1]
 	[inner/left/right join 表名2]  --联合查询
-	[where...]					   --查询结果条件
-	[group by 列名]				   --查询结果按字段分组
-	[having...]					   --过滤分组结果条件
-	[order by...]				   --排序
-	[limit...]					   --分页查询
+	[where...]					--查询结果条件
+	[group by 列名]				   	--查询结果按字段分组
+	[having...]					--过滤分组结果条件
+	[order by...]				        --排序
+	[limit...]					--分页查询
 
 distinct 列名
 根据后面的列名去重
