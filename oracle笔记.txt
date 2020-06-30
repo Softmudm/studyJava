@@ -1,0 +1,170 @@
+Oracle数据库
+
+
+一.创建表空间和用户
+
+1.登录sys账号(选择sysdba)
+
+2.创建表空间语句(于应用性能和管理方面的考虑，最好为不同的用户创建独立的表空间）
+  create tablespace 表空间名字 datafile '路径/名称.DBF' size 200M autoextend on next 10M maxsize unlimited; 
+
+3.创建用户语句
+  create user 用户名称 identified by 用户密码 default tablespace 表空间名称;
+
+4.授权，否则无法登陆连接数据库
+  grant 权限 to 用户; 
+  grant 角色 to 用户;
+撤销权限或角色：把grant换成revoke
+
+5.解锁
+  alter user scott account unlock
+
+二.创建表和约束
+
+1.使用普通用户登录数据库
+
+2.操作表
+  create table 表名称
+  ( 
+  列名1 数据类型，
+  列名2 数据类型，
+  )						--创建表
+  drop table 表名称 		--删除表
+
+3.操作表结构
+注释
+  comment on table/column 表名称/表名称.列名称 is '注释内容'
+列
+  				   add (列名 数据类型);    --增加列
+  alter table 表名 drop (列名 数据类型);   --删除列
+				   modify (列名 数据类型); --修改列
+约束
+										  primary key (列名); --主键约束
+										  foreign key (列名); --外键约束
+  alter table 表名 add constraint 约束名称 unique (列名);      --唯一约束
+  										  check (列名>xx);	  --检查约束
+  删除约束
+  alter table 表名 drop constraint 约束名称
+
+三.SQL语言
+
+DCL （数据控制语言）
+数据控制语言 – Data Control Language
+指用于设置用户权限语句
+grant、revoke、if…else、while、begin transaction
+
+DDL （数据定义语言）
+数据定义语言 - Data Definition Language
+用来定义数据库的对象，如数据表、视图、索引等
+create、alter、drop、truncate
+
+---------------对应上面的笔记------------------
+
+DML （数据处理语言）
+数据处理语言 - Data Manipulation Language
+在数据库表中更新，增加和删除记录
+update、insert、delete 不包含查询
+
+DQL （数据查询语言）（★★★★★）
+数据查询语言 – Data Query Language
+数据表记录的查询。
+select
+
+TCL （事务控制语言）
+事务控制语言 – Transaction Control Language
+控制事务语句
+commit、savepoint、rollback
+----------------------------------------------
+
+DML语言
+
+增加
+insert into 表名 (列名1,列名2,...) values(值1,,值2,...)
+
+删除
+delete from 表名 where ...
+
+修改
+update 表名 set 列名1=值1,列名2=值2,... where ...
+
+注意!!!
+delete、truncate、drop的区别
+delete只删除数据(一行或多行可选)
+truncate清空数据、重设auto_increament计数器、对事务无影响
+drop删除所有数据和(结构、索引、约束)
+
+DQL语言
+select [distinct] 列名 [as 列别名]
+	from 表名1 [as 表别名1]
+	[inner/left/right join 表名2]  --联合查询
+	[where...]					   --查询结果条件
+	[group by 列名]				   --查询结果按字段分组
+	[having...]					   --过滤分组结果条件
+	[order by...]				   --排序
+	[limit...]					   --分页查询
+
+distinct 列名
+根据后面的列名去重
+
+联合查询 join
+
+	交叉连接
+	1.select * from 表1,表2;
+	2.select * from 表1 cross join 表2;
+
+	内连接
+	1.select * from 表1,表2 where 字段1=字段2;
+	2.select * from 表1 [inner] join 表2 on 字段1=字段2;
+
+	左外连接
+	1.select * from 表1,表2 where 字段1=字段2(+);
+	2.select * from 表1 left [outer] join 表2 on 字段1=字段2;
+
+	右外连接
+	1.select * from 表1,表2 where 字段1(+)=字段2;
+	2.select * from 表1 right [outer] join 表2 on 字段1=字段2;
+
+	自连接
+	自连接其实可以理解成上面几个连接中连接的两张表是一摸一样的
+
+查询结果条件 where
+
+	>  <  =  between and  or  like  in  
+	其中like是模糊查询
+	select * from 表名 where 列名 like '% 或 _'
+	%代表多个字符，_代表一个字符
+	还有判断是否不能用=要用is/is not
+
+分组 group by
+
+	select 聚合函数() ...from 表名 where ... group by 列名
+	注意!!!：只有group by后面有的列才能写到前面select后。
+
+	聚合函数：
+	max(),min(),sum(),count(),avg()
+
+过滤分组结果 having
+	
+	对分组后的结果进行筛选
+
+排序 order by
+	
+	列名1 排序规则，列名2 排序规则
+	排序规则：asc 升序，desc 降序
+
+分页 limit 
+	
+	limit是mysql中的关键字，
+	在Oracle中使用伪列来实现分页
+	rownum(行号)和rowid(行id)
+
+	rownum是select一查出来加上的，在排序之前
+	rownum只能从1开始依次递增，所以where中不能写rownum>正数。
+
+	oracle带排序分页(例子：查20到30条)
+	select * from(
+		select rownum rn,ttt.* from(
+			select .. from .. where .. order by ..
+			//这里是待分页的查询语句
+		) ttt where rn <=30
+	) where rn>=20
