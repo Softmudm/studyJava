@@ -1,4 +1,4 @@
-﻿Oracle数据库
+Oracle数据库
 
 
 一.创建表空间和用户
@@ -35,12 +35,14 @@
 注释
   comment on table/column 表名称/表名称.列名称 is '注释内容'
 列
-  		   add (列名 数据类型);    --增加列
-  alter table 表名 drop (列名 数据类型);   --删除列
-		   modify (列名 数据类型); --修改列
+  		   add (列名 数据类型);    	  --增加列
+  alter table 表名 drop column 列名   		  --删除列
+		   modify (列名 数据类型); 	  --修改列类型
+		   rename column 原列名 to 新列名 --修改列名
+
 约束
 					   primary key (列名); --主键约束
-					   foreign key (列名); --外键约束
+					   foreign key (列名) references 表名 (列名) on delete [set null/cascade/no action]; --外键约束
   alter table 表名 add constraint 约束名称 unique (列名);      --唯一约束
   					   check (列名>xx);    --检查约束
   删除约束
@@ -80,8 +82,11 @@ DML语言
 
 增加
 insert into 表名 (列名1,列名2,...) values(值1,,值2,...)
-
-删除
+	序列：默认从1开始依次递增，用来给主键赋值，不属于任何表但是可以和表逻辑绑定
+		create sequence 序列名称
+		select 序列名称.currval/nextval from dual
+	  --currval当前值，nextval下一个
+	  --dual虚表，无意义，补全语法
 delete from 表名 where ...
 
 修改
@@ -94,6 +99,45 @@ truncate清空数据、重设auto_increament计数器、对事务无影响
 drop删除所有数据和(结构、索引、约束)
 
 DQL语言
+注意!!!!
+查询时尽量少用*，把要查询的字段都列出来不仅可以提高效率，
+还能避免一些错误。
+
+单行函数(作用于一行，返回一个值)
+	字符函数
+		select upper('yes') from dual;--YES
+		select lower('YES') from dual;--yes
+	数值函数
+		select round(56.53,1) from dual;--56.5
+		select round(56.53,-1) from dual;--60
+		select trunc(56.53,-1) from dual;--50
+	日期函数
+		sysdate系统当前时间，可以直接相加减
+		sysdate-时间=天数
+		month_between(sysdate,时间)=月数
+		月数/12=年数
+		天数/7=周数
+	转换函数
+		to_char(date类型,'[fm] YYYY-MM-DD hh[24]:mi:ss')
+		to_date(字符串类型,'[fm] YYYY-MM-DD hh[24]:mi:ss')
+	条件表达式
+		select e.salary,
+			case
+				when e.salary>3000 then '高收入'
+				when e.salary>1500 then '中等收入'
+				else '低收入'
+				end
+		from emp e;
+	数据库中null和数值相加都等于null
+	nvl(可能为null的数字,0)
+	如果第一个参数为null，就用0代替。
+
+多行函数(作用于多行，返回一个值)
+	max
+	min
+	sum
+	count
+	avg
 select [distinct] 列名 [as 列别名]
 	from 表名1 [as 表别名1]
 	[inner/left/right join 表名2]  --联合查询
@@ -166,5 +210,15 @@ distinct 列名
 		select rownum rn,ttt.* from(
 			select .. from .. where .. order by ..
 			//这里是待分页的查询语句
-		) ttt where rn <=30
+		) ttt where rownum <=30  --这里不能用rn，因为where比别名先运算
 	) where rn>=20
+
+索引
+	索引就是在表的列上创建一个二叉树
+	索引会提高查询效率，但会影响增删改的效率
+	单列索引
+	只有查询条件是原始值才会触发索引
+	create index 索引名称 on 表名(列名);
+	复合索引
+	必须包含列名1的原始值才会触发索引
+	create index 索引名称 on 表名(列名1,列名2)
