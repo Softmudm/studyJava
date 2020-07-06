@@ -103,41 +103,6 @@ DQL语言
 查询时尽量少用*，把要查询的字段都列出来不仅可以提高效率，
 还能避免一些错误。
 
-单行函数(作用于一行，返回一个值)
-	字符函数
-		select upper('yes') from dual;--YES
-		select lower('YES') from dual;--yes
-	数值函数
-		select round(56.53,1) from dual;--56.5
-		select round(56.53,-1) from dual;--60
-		select trunc(56.53,-1) from dual;--50
-	日期函数
-		sysdate系统当前时间，可以直接相加减
-		sysdate-时间=天数
-		month_between(sysdate,时间)=月数
-		月数/12=年数
-		天数/7=周数
-	转换函数
-		to_char(date类型,'[fm] YYYY-MM-DD hh[24]:mi:ss')
-		to_date(字符串类型,'[fm] YYYY-MM-DD hh[24]:mi:ss')
-	条件表达式
-		select e.salary,
-			case
-				when e.salary>3000 then '高收入'
-				when e.salary>1500 then '中等收入'
-				else '低收入'
-				end
-		from emp e;
-	数据库中null和数值相加都等于null
-	nvl(可能为null的数字,0)
-	如果第一个参数为null，就用0代替。
-
-多行函数(作用于多行，返回一个值)
-	max
-	min
-	sum
-	count
-	avg
 select [distinct] 列名 [as 列别名]
 	from 表名1 [as 表别名1]
 	[inner/left/right join 表名2]  --联合查询
@@ -222,3 +187,70 @@ distinct 列名
 	复合索引
 	必须包含列名1的原始值才会触发索引
 	create index 索引名称 on 表名(列名1,列名2)
+
+单行函数(作用于一行，返回一个值)
+	字符函数
+		select initcap('yes') from dual;--Yes首字母大写
+		select upper/lower('yes') from dual;--YES/yes全部大/小写
+		select ltrim/rtrim('aaajavaaaa','aj/va') from dual;--vaaa/aaaj左/右裁剪，后面参数顺序无关
+		select translate('jack','abcd','1234') from dual;--j13k按字符翻译
+		select replace('jack','k','lala') from dual;--jaclala字符串替换
+		select instr('worldwide','d') from dual;--5查找子串位置，从左边开始
+		select substr('abcdefgh',3,4) from dual;--cdef取子字符串
+		select concat('Hello','world') from dual;--Helloworld字符串连接
+
+	数值函数
+		select abs(-5) from dual;--5取绝对值
+		select sign(-32) from dual;--(-1)取符号
+		select ceil/floor(44.5) from dual;--45/44向上/下取整
+		select round(56.53,1) from dual;--56.5第二个参数是保留几位小数可以是负数
+		select round(56.53,-1) from dual;--60四舍五入
+		select trunc(56.53,-1) from dual;--50截取
+		select power(2,4) from dual;--16m的n次方
+		select sqrt(16) from dual;4平方根
+		select mod(10,3) from dual;1取余
+		select sin() from dual;--正弦
+		select cos()from dual;--余弦
+
+	转换函数
+		to_char(date类型,'[fm] YYYY-MM-DD hh[24]:mi:ss')--转换为字符串
+		to_date(字符串类型,'[fm] YYYY-MM-DD hh[24]:mi:ss')--转换为日期
+		to_number(字符串类型)--转换为数值
+
+	日期函数
+		months_between(日期1,日期2)--返回两个日期之间的月数
+		add_months(日期,月份数)--返回加上月份数后的日期
+		next_day(日期,'星期X')--返回日期后星期对应的新日期
+		last_day(日期)--返回日期所在月份的最后一天日期
+		round/trunc(日期)--对日期进行四舍五入/截断
+	----实际用法----
+		sysdate系统当前时间，可以直接相加减
+		sysdate-时间=天数
+		months_between(sysdate,时间)=月数
+		月数/12=年数
+		天数/7=周数
+
+	常用其它函数
+		数据库中null和数值相加都等于null
+		nvl(exp1,exp2)--如果exp1为null，就用exp2代替。
+		nvl2(exp1,exp2,exp3)--如果exp1为null，返回exp3的值，否则返回exp2的值
+		decode(value,if1,then1,if2,then2,...,else)
+		--如果value=if1，就返回then1的值
+		  如果value=if2，就返回then2的值
+		  都不满足，返回else的值
+
+	条件表达式
+		select e.salary,
+			case
+				when e.salary>3000 then '高收入'
+				when e.salary>1500 then '中等收入'
+				else '低收入'
+				end
+		from emp e;
+
+多行函数(作用于多行，返回一个值)
+	max()--求最大
+	min()--求最小
+	sum()--求和
+	count()--计数
+	avg()--求平均值
