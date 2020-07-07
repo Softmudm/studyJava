@@ -222,7 +222,9 @@ distinct 列名
 		add_months(日期,月份数)--返回加上月份数后的日期
 		next_day(日期,'星期X')--返回日期后星期对应的新日期
 		last_day(日期)--返回日期所在月份的最后一天日期
-		round/trunc(日期)--对日期进行四舍五入/截断
+		round/trunc(日期,'year/month/day')
+		--对日期进行四舍五入/截断(6月30日为年分界线,15号为月分界线)(舍)
+		--日期是四舍五入到星期日，星期二为分界线(舍)
 	----实际用法----
 		sysdate系统当前时间，可以直接相加减
 		sysdate-时间=天数
@@ -254,3 +256,96 @@ distinct 列名
 	sum()--求和
 	count()--计数
 	avg()--求平均值
+
+
+----------------------------------------------------------------
+PL/SQL编程语言
+对SQL语言的扩展，具有过程化编程特性，主要用来编写存储过程和存储函数等
+
+--声明和赋值
+declare
+	i number(3) := 10;
+	s varchar2(10) := "小明";
+	ena emp.ename%type; --ena为emp表中ename列的类型(引用型变量)
+	emprow emp%rowtype; --emprow为emp表中的一行(记录型变量)
+begin
+	dbms_output.put_line(i); --输出使用dbms_output.put_line();
+	dms_output.put_line(s);
+	--使用into给ena赋值
+	select ename into ena from emp where empno=7788;
+	dms_output.put_line(ena);
+	--给记录emprow赋值(连接使用"||"连接字符串)
+	select * into emprow from emp where empno=7788;
+	dms_output.put_line(emprow.ename || '的工作为' || emprow.job);
+end;
+
+--if判断语句
+	declare
+		i number(3) := &ii; --&符号后面随便加一个代表输入
+	begin
+		if i<18 then
+			dbms_output.put_line('未成年');
+		elsif i<40 then     --注意：这里是"elsif"!!!
+			dbms_output.put_line('中年人');
+		else
+			dbms_output.put_line('老年人');
+		endif;              --这里要打冒号
+	end;
+
+--三种循环语句
+------while循环------
+	declare
+		i number(2) := 1;
+	begin
+		while i<11 loop
+		dbms_output.put_line(i);
+		i := i+1;
+		end loop;
+	end;
+------exit循环------(用的较多)
+	declare
+		i number(2) := 1;
+	begin
+		loop
+			exit when i>10;
+			dbms_output.put_line(i);
+			i := i+1;
+		end loop;
+	end;
+------for循环------
+	declare
+	begin
+		for i in 1..10 loop
+		dbms_output.put_line(i);
+		end loop;
+	end;
+
+--游标----------------------------------------------------
+declare
+	cursor c1 is select * from t_emp; --定义游标
+	emprow emp%rowtype; --定义一个记录型变量
+begin
+	open c1; --打开游标
+		loop --循环
+			fetch c1 into emprow; --取一行数据赋值
+			exit when c1%notfound; --退出条件
+			dbms_output.put_line(emprow.ename); --输出名字
+		end loop;
+	close c1;
+end;
+--带参数游标
+declare
+  --参数列表写在游标后面
+  cursor c2(s t_emp.sex%type) is select eid from t_emp where sex=s;
+  vc_id t_emp.eid%type;
+begin
+  open c2('M');--参数赋值
+  loop
+    fetch c2 into vc_id;
+    exit when c2%notfound;
+    update t_emp set ename=concat(ename,'M') where eid=vc_id;
+    commit;
+  end loop;
+  close c2;
+end;
+-----------------------------------------------------------
