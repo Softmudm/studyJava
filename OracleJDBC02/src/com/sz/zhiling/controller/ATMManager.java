@@ -3,6 +3,7 @@ package com.sz.zhiling.controller;
 import com.sz.zhiling.modal.Card;
 import com.sz.zhiling.util.OracleJDBC;
 
+import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -200,6 +201,8 @@ public class ATMManager {
             System.out.println("不能自己转账给自己!");
             return;
         }
+        Connection connection = OracleJDBC.getConnection();
+        PreparedStatement ps = null;
         if (flag) {
             System.out.println("请输入转账金额:");
             try {
@@ -208,12 +211,35 @@ public class ATMManager {
                     float countmoney = (cd.getBalance() - turnmoney);
                     if (countmoney >= 0) {
                         String usql = "update BANKCARD set balance=? where cardid=?";
-                        if(OracleJDBC.DML(usql,countmoney,cd.getCardid())==1&&OracleJDBC.DML(usql,(cd2.getBalance()+turnmoney),cd2.getCardid())==1){
+                        try {
+                            //关闭事务自动提交
+                            connection.setAutoCommit(false);
+                            ps = connection.prepareStatement(usql);
+                            ps.setFloat(1,countmoney);
+                            ps.setString(2,cd.getCardid());
+                            //添加到一个批次
+                            ps.addBatch();
+                            //清除参数
+                            ps.clearParameters();
+                            ps.setFloat(1,cd2.getBalance()+turnmoney);
+                            ps.setString(2,cd2.getCardid());
+                            ps.addBatch();
+                            //批次执行数据库操作
+                            ps.executeBatch();
+                            //提交事务
+                            connection.commit();
                             cd.setBalance(countmoney);
                             System.out.println("转账成功，余额为" + cd.getBalance());
-                        }else{
+                        } catch (SQLException throwables) {
+                            try {
+                                connection.rollback();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
                             System.out.println("转账失败，请联系管理员!");
+                            throwables.printStackTrace();
                         }
+                        //OracleJDBC.DML1(usql,countmoney,cd.getCardid())==1&&OracleJDBC.DML1(usql,(cd2.getBalance()+turnmoney),cd2.getCardid())==1){
                     } else {
                         System.out.println("余额不足，转账失败!");
                     }
