@@ -492,3 +492,48 @@ declare
 begin
   select s_bankcard.nextval into :new.cardid from dual;
 end;
+
+------------------------------------------------------------------
+表分区与优化
+
+--分区(一般超过2GB就应该使用)
+将表中数据划分成若干部分，并存储在不同的位置
+优点:1.改善查询性能
+	 2.增强可用性
+	 3.维护方便
+	 4.均衡I/O
+缺点:已经存在的表没有方法可以直接转化为分区表
+partition by range(列名) --根据列名的值来分区
+(partition 分区1名 values less than(10000),
+partition 分区2名 values less than(99999))
+查询分区数据
+select * from 表名 partition(分区名)
+
+--SQL查询优化
+1.减少磁盘访问(使用高速缓存)
+2.返回更少数据
+3.减少交互次数
+4.减少服务器CPU和内存开销
+5.增加资源
+
+1.使用索引
+2.存储过程
+3.视图
+4.表分区
+5.sql语句优化
+--sql语句优化
+1.尽量使用索引，避免全盘扫描
+  where或者order by后面字段使用索引
+  避免where子句对字段判断null值
+  尽量不要再数据库留null，可以设置默认值为''或0
+  避免使用！=或<>
+  避免在where使用or，用union (all)代替
+  select id from t where num=10 or name='admin';
+  改成
+  select id from t where num=10
+  union all
+  select id from t where name='admin';
+  使用exists代替in
+2.能使用数字就使用数字
+3.将*改为具体字段
+4.将过滤条件多的条件写到最右边/左边(ORACLE/MYSQL)
