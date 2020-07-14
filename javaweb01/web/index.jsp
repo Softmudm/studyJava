@@ -1,6 +1,6 @@
 <%--指令标签--%>
 <%@ page import="com.sz.zhiling.entity.Student" %>
-<%@ page import="com.sz.zhiling.service.studentService" %>
+<%@ page import="com.sz.zhiling.dao.studentDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--html标记语言--%>
 <html>
@@ -26,7 +26,7 @@
           </tr>
           <%--嵌入java代码--%>
           <%
-            for (Student student : new studentService().selectAllStudent()) {
+            for (Student student : new studentDao().selectAllStudent()) {
           %>
           <tr>
             <td><%=student.getStuid()%></td>
