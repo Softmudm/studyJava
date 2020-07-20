@@ -26,6 +26,6 @@ public class deleteUserServlet extends HttpServlet {
             userDao.deleteUsers(ids);
             System.out.println(request.getRemoteAddr()+"删除了"+ids);
         }
-        response.sendRedirect("http://localhost:8080/selectUserServlet");
+        request.getRequestDispatcher("selectUserServlet").forward(request,response);
     }
 }

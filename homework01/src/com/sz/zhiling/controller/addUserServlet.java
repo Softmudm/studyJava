@@ -18,7 +18,7 @@ public class addUserServlet extends HttpServlet {
         User user = new User(request.getParameter("username"),Integer.parseInt(request.getParameter("roleid")));
         userDao.addUser(user);
         System.out.println(request.getRemoteAddr()+"添加了用户"+user);
-        response.sendRedirect("http://localhost:8080/selectUserServlet");
+        request.getRequestDispatcher("selectUserServlet").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

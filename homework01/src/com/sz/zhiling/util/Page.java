@@ -15,7 +15,7 @@ public class Page<T> {
     private List<T> date;//查询结果
 
     public int getTotalpage() {
-        return totalpage;
+        return totalnum%pagesize==0?totalnum/pagesize:totalnum/pagesize+1;
     }
 
     public void setTotalpage(int totalpage) {
@@ -61,17 +61,18 @@ public class Page<T> {
     }
 
     public Page() {
+        this.date=null;
     }
 
     /**
-     *
-     * @param pageno 当前页码
-     * @param pagesize 页面条数（大小）
-     * @param sql 查询语句
+     * 查询语句分页
+     * @param pageno
+     * @param pagesize
+     * @param sql
      * @param runner
      * @param clazz
      */
-    public Page<T> paging(int pageno, int pagesize, String sql, QueryRunner runner,Class<T> clazz){
+    public Page(int pageno, int pagesize, String sql, QueryRunner runner,Class<T> clazz){
         this.pageno = pageno;
         this.pagesize = pagesize;
         String pagesql ="select * from(" +
@@ -80,12 +81,11 @@ public class Page<T> {
                 + ") ttt where rownum<="+pageno*pagesize +
                 ") where rn>"+(pageno-1)*pagesize;
         try {
-            this.totalnum = (int) runner.query("select count(*) from ("+sql+")",new ScalarHandler());
+            this.totalnum = Integer.parseInt(String.valueOf(runner.query("select count(*) from ("+sql+")",new ScalarHandler())));
             this.date = runner.query(pagesql,new BeanListHandler<>(clazz));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         this.totalpage = (totalnum%pagesize)==0 ? (totalnum/pagesize):(totalnum/pagesize)+1;
-        return this;
     }
 }
