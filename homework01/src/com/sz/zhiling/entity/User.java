@@ -1,11 +1,14 @@
 package com.sz.zhiling.entity;
 
 
+import java.util.ArrayList;
+
 public class User {
     private int userid;
     private String username;
     private int roleid;
     private String rolename;
+    private ArrayList<Integer> likeids;
 
     @Override
     public String toString() {
@@ -14,7 +17,16 @@ public class User {
                 ", username='" + username + '\'' +
                 ", roleid=" + roleid +
                 ", rolename='" + rolename + '\'' +
+                ", likeids=" + likeids +
                 '}';
+    }
+
+    public User(int userid, String username, int roleid, String rolename, ArrayList<Integer> likeids) {
+        this.userid = userid;
+        this.username = username;
+        this.roleid = roleid;
+        this.rolename = rolename;
+        this.likeids = likeids;
     }
 
     public User(int userid, String username, int roleid, String rolename) {
@@ -68,5 +80,13 @@ public class User {
 
     public void setRolename(String rolename) {
         this.rolename = rolename;
+    }
+
+    public ArrayList<Integer> getLikeids() {
+        return likeids;
+    }
+
+    public void setLikeids(ArrayList<Integer> likeids) {
+        this.likeids = likeids;
     }
 }

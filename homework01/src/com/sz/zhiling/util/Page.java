@@ -12,7 +12,7 @@ public class Page<T> {
     private int totalpage;//总页数
     private int pagesize;//页面条数
     private int pageno;//当前页码
-    private List<T> date;//查询结果
+    private List<T> data;//查询结果
 
     public int getTotalpage() {
         return totalnum%pagesize==0?totalnum/pagesize:totalnum/pagesize+1;
@@ -39,11 +39,11 @@ public class Page<T> {
     }
 
     public List<T> getDate() {
-        return date;
+        return data;
     }
 
-    public void setDate(List<T> date) {
-        this.date = date;
+    public void setDate(List<T> data) {
+        this.data = data;
     }
 
     public int getTotalnum() {
@@ -61,7 +61,7 @@ public class Page<T> {
     }
 
     public Page() {
-        this.date=null;
+        //this.data=null;
     }
 
     /**
@@ -82,7 +82,7 @@ public class Page<T> {
                 ") where rn>"+(pageno-1)*pagesize;
         try {
             this.totalnum = Integer.parseInt(String.valueOf(runner.query("select count(*) from ("+sql+")",new ScalarHandler())));
-            this.date = runner.query(pagesql,new BeanListHandler<>(clazz));
+            this.data = runner.query(pagesql,new BeanListHandler<>(clazz));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

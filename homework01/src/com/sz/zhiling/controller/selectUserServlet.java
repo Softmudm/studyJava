@@ -1,6 +1,9 @@
 package com.sz.zhiling.controller;
 
+import com.sz.zhiling.dao.LikeDao;
+import com.sz.zhiling.dao.RoleDao;
 import com.sz.zhiling.dao.UserDao;
+import com.sz.zhiling.entity.Like;
 import com.sz.zhiling.entity.Role;
 import com.sz.zhiling.entity.User;
 
@@ -17,24 +20,31 @@ public class selectUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         UserDao userDao = new UserDao();
+        RoleDao roleDao = new RoleDao();
+        LikeDao likeDao = new LikeDao();
         String n = request.getParameter("pageno");
         String s = request.getParameter("pagesize");
         String keyword = request.getParameter("keyword");
         int pageno = ("".equals(n)||n==null)? 1:Integer.parseInt(n);
-        int pagesize = ("".equals(s)||s==null)? 10:Integer.parseInt(s);
+        int pagesize = ("".equals(s)||s==null)? 5:Integer.parseInt(s);
         keyword = keyword==null? "":keyword;
         List<User> list = userDao.selectPageUsers(pageno,pagesize,keyword);
-        List<Role> rolelist = userDao.selectAllRole();
+        for (User user : list) {
+            user.setLikeids(likeDao.selectLikeidsById(user.getUserid()));
+        }
+        List<Role> rolelist = roleDao.selectAllRole();
+        List<Like> likelist = likeDao.selectAllLikes();
         int pgnm = userDao.countAll(keyword);
         int currentPage = pgnm%pagesize==0?pgnm/pagesize:pgnm/pagesize+1;
         request.setAttribute("list",list);
         request.setAttribute("rolelist",rolelist);
+        request.setAttribute("likelist",likelist);
         request.setAttribute("pageno",pageno);
         request.setAttribute("pagesize",pagesize);
         request.setAttribute("currentPage",currentPage);
         request.setAttribute("keyword",keyword);
         request.setAttribute("pgnm",pgnm);
-        request.getRequestDispatcher("index.jsp").forward(request,response);
+        request.getRequestDispatcher("userslist.jsp").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

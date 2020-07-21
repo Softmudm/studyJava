@@ -1,6 +1,5 @@
 package com.sz.zhiling.dao;
 
-import com.sz.zhiling.entity.Role;
 import com.sz.zhiling.entity.User;
 import com.sz.zhiling.util.JDBC;
 import org.apache.commons.dbutils.QueryRunner;
@@ -46,10 +45,21 @@ public class UserDao {
     }
 
     //增加用户
-    public int addUser(User user){
-        String sql = "insert into t_users values(s_t_users_id.nextval,?,?)";
+    public int reUserid(){
+        String sql = "select s_t_users_id.nextval from dual";
         try {
-            return runner.update(sql,user.getUsername(),user.getRoleid());
+            return Integer.parseInt(String.valueOf(runner.query(sql,new ScalarHandler())));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
+
+    //增加用户
+    public int addUser(User user){
+        String sql = "insert into t_users values(?,?,?)";
+        try {
+            return runner.update(sql,user.getUserid(),user.getUsername(),user.getRoleid());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -87,16 +97,5 @@ public class UserDao {
             throwables.printStackTrace();
         }
         return 0;
-    }
-
-    //查询角色表
-    public List<Role> selectAllRole(){
-        String sql = "select t_roleid roleid,t_rolename rolename from t_role";
-        try {
-            return runner.query(sql,new BeanListHandler<>(Role.class));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
     }
 }

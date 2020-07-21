@@ -5,8 +5,7 @@ import com.sz.zhiling.util.JDBC;
 import com.sz.zhiling.util.Page;
 import org.apache.commons.dbutils.QueryRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Field;
 
 public class TestPage {
     public static void main(String[] args) {
@@ -18,6 +17,13 @@ public class TestPage {
         for (User user : pu.getDate()) {
             System.out.println(user);
         }
-        List<String> l = new ArrayList<>();
+        for (Field d : pu.getClass().getDeclaredFields()) {
+            try {
+                d.setAccessible(true);
+                System.out.println(d.get(pu));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

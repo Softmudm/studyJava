@@ -1,5 +1,6 @@
 package com.sz.zhiling.controller;
 
+import com.sz.zhiling.dao.LikeDao;
 import com.sz.zhiling.dao.UserDao;
 
 import javax.servlet.ServletException;
@@ -19,11 +20,14 @@ public class deleteUserServlet extends HttpServlet {
         String id = request.getParameter("userid");
         String ids = request.getParameter("userids");
         UserDao userDao = new UserDao();
+        LikeDao likeDao = new LikeDao();
         if(id!=null && id!=""){//单个删除
             userDao.deleteUser(Integer.parseInt(id));
+            likeDao.deleteUsersLike(Integer.parseInt(id));
             System.out.println(request.getRemoteAddr()+"删除了"+id);
         }else{
             userDao.deleteUsers(ids);
+            likeDao.deleteUsersLike(ids);
             System.out.println(request.getRemoteAddr()+"删除了"+ids);
         }
         request.getRequestDispatcher("selectUserServlet").forward(request,response);
