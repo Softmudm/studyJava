@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<c3p0-config>
+    <!--oracle连接 ！ -->
+    <default-config>
+        <!--连接四大参数配置-->
+        <property name="driverClass">oracle.jdbc.driver.OracleDriver</property>
+        <property name="jdbcUrl">jdbc:oracle:thin:@localhost:1521:orcl</property>
+        <property name="user">test01</property>
+        <property name="password">123456</property>
+        <!--连接池参数配置-->
+        <!--初始化连接数-->
+        <property name="initialPoolSize">4</property>
+        <!--最大最小连接数-->
+        <property name="maxPoolSize">10</property>
+        <property name="minPoolSize">2</property>
+        <!--连接用完了自动增量2个-->
+        <property name="acquireIncrement">2</property>
+        <!--最大空闲时间，60秒未使用则连接被丢弃-->
+        <property name="maxIdleTime">60</property>
+        <!--最大连接数-->
+        <property name="maxStatements">20</property>
+    </default-config>
+</c3p0-config>
