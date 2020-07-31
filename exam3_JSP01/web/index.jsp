@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Title</title>
-    <%response.sendRedirect("/conferencelist.jsp");%>
+    <%response.sendRedirect("/conferencelist.html");%>
 </head>
 <body>
 

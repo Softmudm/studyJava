@@ -94,7 +94,7 @@ function sel(pageno) {
                 t=t+"<td>"+v.conferenceSize+"</td>";
                 t=t+"<td><button class='btn btn-success' onclick=\"update('";
                 t=t+v.serialId;
-                t=t+"')\">修改</button><button class=\"btn btn-warning\" onclick=\"del("+v.serialId+")\">删除</button></td></tr>";
+                t=t+"')\">修改</button><button style='margin-left: 10px' class=\"btn btn-warning\" onclick=\"del("+v.serialId+")\">删除</button></td></tr>";
             })
             $("#tblist").html(t);
             $("#pnSelect button").show();

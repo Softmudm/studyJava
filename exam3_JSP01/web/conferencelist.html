@@ -1,6 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <html>
   <head>
+    <meta charset="UTF-8">
     <title>JSP机试：会议室管理</title>
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="layer/layer/theme/default/layer.css">
@@ -31,14 +33,14 @@
             <tbody id="tblist">
             </tbody>
           </table>
-          <%-------------页面页数按钮------------%>
+          <!-------------页面页数按钮------------>
           <div id="pnSelect" style="float:right" class="pagination">
             <button class="btn" id="prePage" value="1">上一页</button>
             <button class="btn" id="btn1">1</button>
             <span id="prePoint">...</span>
             <button class="btn" id="btn2"></button>
             <button class="btn" id="btn3"></button>
-            <button class="btn" id="btn4"></button><%--当前页--%>
+            <button class="btn" id="btn4"></button><!--当前页-->
             <button class="btn" id="btn5"></button>
             <button class="btn" id="btn6"></button>
             <span id="sufPoint">...</span>
@@ -51,7 +53,7 @@
         </div>
       </div>
     </div>
-    <%-----------------------------------模态框开始-------------------------------------%>
+    <!-----------------------------------模态框开始------------------------------------->
     <div class="modal fade" id="conferenceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -95,7 +97,7 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal -->
     </div>
-  <%----------------------------------模态框结束------------------------------------------%>
+  <!----------------------------------模态框结束------------------------------------------>
   </body>
   <script type="text/javascript" src="js/conferencelist.js"></script>
 </html>
