@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--Spring容器配置UserDao-->
+    <bean id="UserDao" class="com.sz.test.dao.UserDao"/>
+    <!--设值注入-->
+    <!--Spring容器配置UserServiceImpl，这里id用作getBean的参数获取对象-->
+    <bean id="UserServiceImpl" class="com.sz.test.service.serviceImpl.UserServiceImpl">
+        <!--容器帮忙set注入userDao，这里的name和UserServiceImpl中属性名称一样-->
+        <property name="userDao" ref="UserDao"/>
+    </bean>
+    <!--构造注入  (注意下面子标签也不一样)-->
+    <!--ref是赋值容器中的对象，value是赋值普通的值。name是按名字，index按顺序，type按类型(不建议用)-->
+    <!--<bean id="UserServiceImpl" class="com.sz.test.service.serviceImpl.UserServiceImpl">
+        <constructor-arg name="userDao" ref="UserDao"/>
+        <constructor-arg index="0" ref="UserDao"/>
+        <constructor-arg type="com.sz.test.dao.UserDao" ref="UserDao"/>&ndash;&gt;
+    </bean>-->
+
+
+    <!--开启Spring注解-->
+    <context:component-scan base-package="com.sz"/>
+    <!--c3p0连接池参数配置并交给spring管理-->
+    <bean id="dataSources" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+        <property name="user" value="test01"/>
+        <property name="password" value="123456"/>
+    </bean>
+    <!--dao层属性runner注册到Spring容器-->
+    <bean id="runner" class="org.apache.commons.dbutils.QueryRunner">
+        <constructor-arg name="ds" ref="dataSources"/>
+    </bean>
+</beans>
