@@ -1,0 +1,36 @@
+web项目乱码问题：
+-----------------------------------------
+1.tomcat控制台乱码
+tomcat的\apache-tomcat-8.5.54\conf\logging.properties内
+java.util.logging.ConsoleHandler.encoding = GBK
+这后面是系统默认控制台编码，win10默认为GBK
+-----------------------------------------
+-----------------------------------------
+2.动态资源编码都是正常的，只有静态资源乱码
+这种情况一般是tomcat配置问题，tomcat使用一个默认的servlet处理对静态资源的处理。
+而在tomcat9.0.35中编码为GBK，所以静态资源从根源上就是乱码。后面怎么处理自然都是乱码。
+apache-tomcat-9.0.34\conf\server.xml中
+<Connector port="8080" protocol="HTTP/1.1"
+           connectionTimeout="20000"
+           redirectPort="8443"
+           URIEncoding="UTF-8"
+           />
+\apache-tomcat-9.0.34\conf\web.xml中
+<servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+        	<param-name>fileEncoding</param-name>
+        	<param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+-----------------------------------------
