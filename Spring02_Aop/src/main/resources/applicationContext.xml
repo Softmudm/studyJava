@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <context:component-scan base-package="com.sz.softmudm"/>
+    <!--配置通知类-->
+    <bean id="aopLog" class="com.sz.softmudm.aop.AopLog"/>
+    <!--配置AOP切面-->
+    <aop:config>
+        <!--配置切入点表达式-->
+        <aop:pointcut id="pc" expression="execution(* com.sz.softmudm.targetclass.*.*(..))"/>
+        <!--配置通知类-->
+        <aop:aspect id="aop" ref="aopLog">
+            <!--aop:before表示调用方法前执行-->
+            <aop:before method="doBefore" pointcut-ref="pc"/>
+            <!--aop:after表示调用方法后执行-->
+            <aop:after method="doAfter" pointcut-ref="pc"/>
+            <!--aop:after-returning表示方法返回时执行-->
+            <aop:after-returning method="doReturn" pointcut-ref="pc"/>
+            <!--aop:after-throwing表示方法有异常执行-->
+            <aop:after-throwing method="doThrow" pointcut-ref="pc"/>
+            <!--aop:around表示环绕通知，手动控制增强方法-->
+            <aop:around method="doAround" pointcut-ref="pc"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
