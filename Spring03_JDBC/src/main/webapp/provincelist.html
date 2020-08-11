@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta content="text/html; charset=UTF-8" />
+    <title>省市列表</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="layer/layer/theme/default/layer.css">
+    <script type="text/javascript" src="bootstrap/jquery.min.js"></script>
+    <script type="text/javascript" src="bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="layer/layer/layer.js"></script>
+</head>
+<body onload="initProvincelist()">
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h3>省市列表</h3>
+        </div>
+        <div class="panel-body">
+            <button class="btn btn-success" onclick="add()">增加</button>
+            <div class="pull-right">
+                <form class="form-horizontal" id="findform">
+                    <div class="col-lg-9">
+                        <input class="form-control" name="pname">
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-3" onclick="initProvincelist()">搜索</button>
+                </form>
+            </div>
+            <table id="ptbl" class="table table-striped table-bordered table-hover text-center" style="margin-top: 10px">
+                <tr>
+                    <td></td>
+                    <td class="col-sm-1">序号</td>
+                    <td>省编号</td>
+                    <td>省名称</td>
+                    <td>上级编号</td>
+                    <td>操作</td>
+                </tr>
+                <tbody id="plist"></tbody>
+            </table>
+        </div>
+        <div class="panel-footer text-right">
+            省市列表By WX
+        </div>
+    </div>
+</div>
+<!-----------------------------------模态框开始------------------------------------->
+<div class="modal fade" id="provinceModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="provinceModalTitle">添加</h4>
+            </div>
+            <div class="modal-body">
+                <form id="provinceModalform" class="form-horizontal">
+                    <input id="pid" name="pid" type="hidden"/>
+                    <input id="cid" name="cid" type="hidden"/>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">省：</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input id="pname" name="pname" type="text"  class="form-control">
+                                <div class="input-group-btn">
+                                    <button id="dropdownbtn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul id="dd" class="dropdown-menu pull-right" style="max-height: 150px;overflow-y: auto">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">市：</label>
+                        <div class="col-sm-4">
+                            <input id="cname" name="cname" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="sub()">提交</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------------------------------模态框结束------------------------------------------>
+</body>
+<script type="text/javascript" src="js/provincelist.js"></script>
+</html>
