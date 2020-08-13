@@ -8,12 +8,14 @@
         <welcome-file>provincelist.html</welcome-file>
     </welcome-file-list>
     <!--web.xml中的加载顺序：context-param >> listener  >> fileter  >> servlet-->
-    <!--按照配置加载spring上下文-->
+    <!--按照配置加载spring容器-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:applicationContext.xml</param-value>
     </context-param>
-    <!--监听tomcat上下文,tomcat上下文一创建就去加载spring配置文件-->
+    <!--监听tomcat上下文,tomcat上下文一创建就去加载spring配置文件创建spring容器-->
+    <!-- 在tomcat容器启动时创建spring容器对象可以保证只创建一次 -->
+    <!-- tomcat容器属性是全局的，让spring容器成为tomcat容器一个属性也可以保证全局性 -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
