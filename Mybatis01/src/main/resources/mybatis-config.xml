@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 打印日志信息 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+   <!-- <typeAliases>
+        <typeAlias type="com.wx.exam.entity.User" alias="UserDao"/>
+    </typeAliases>-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <!--事务管理类型-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/exam01" />
+                <property name="username" value="root" />
+                <property name="password" value="root" />
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="com/wx/exam/mapper/UserMapper.xml" />
+    </mappers>
+</configuration>
