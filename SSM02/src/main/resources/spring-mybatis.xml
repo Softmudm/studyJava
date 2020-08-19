@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 把jdbc.properties导入进来 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--配置数据源(阿里巴巴的)-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${pwd}"/>
+    </bean>
+
+    <!-- 配置sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 配置数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置映射文件位置 -->
+        <property name="mapperLocations" value="classpath:com/sz/wx/mapper/*.xml"/>
+        <!-- 配置别名(不支持扫描一个文件夹只能一个一个类配置，除非重写包路径读取方式) -->
+        <!--<property name="typeAliasesPackage" value="com.wx.exam.entity"/>-->
+        <!-- 配置日志 -->
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration">
+                <property name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>
+            </bean>
+        </property>
+        <!-- 配置pagehelper分页插件 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties" value="dialect=mysql"/>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!-- 配置mybatis接口文件所在的包(扫描)(mybatis底层是使用jdk动态代理实现的，所以需要接口) -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.sz.wx.dao"/>
+        <!-- 指定sqlSessionFactory的bean名称 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+</beans>
