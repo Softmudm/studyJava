@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.wx.dao.UserDao"><!-- 命名空间(使用接口时这里必须写dao层接口全类名) -->
+    <!-- #{}预编译形式，参数设置到sql中，PreparedStatement防止sql注入；${}直接拼接。-->
+    <!-- 查询所有用户信息 -->
+    <select id="selectUserList" resultType="com.sz.wx.entity.User">
+        select uid,uname,upwd from t_user
+    </select>
+
+    <!-- 添加用户 -->
+    <insert id="addUser" parameterType="com.sz.wx.entity.User" useGeneratedKeys="true" keyColumn="uid">
+        insert into t_user (uname,upwd) values (#{uname},#{upwd})
+        <selectKey resultType="int" keyProperty="uid">
+            select LAST_INSERT_ID() as id
+        </selectKey>
+    </insert>
+
+</mapper>

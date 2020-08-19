@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>城市列表</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css">
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h3>城市列表</h3>
+        </div>
+        <div class="panel-body">
+            <div style="margin: 10px 0">
+                <form class="form-inline">
+                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>&nbsp;增加</button>
+                    <button type="button" class="btn btn-danger" onclick="delCitys()"><span class="glyphicon glyphicon-trash"></span>&nbsp;批量删除</button>
+                    <div class="pull-right">
+                        <input id="search" name="search" class="form-control" placeholder="关键字查询">
+                        <select id="province" name="pid" class="form-control">
+                            <option value="0">-选择省-</option>
+                        </select>
+                        <button type="button" class="btn btn-primary" onclick="getCityList(1)"><span class="glyphicon glyphicon-search"></span>&nbsp;搜索</button>
+                    </div>
+                </form>
+            </div>
+            <table class="table table-striped table-bordered table-hover text-center">
+                <tr>
+                    <td><input id="checkAll" type="checkbox"></td>
+                    <td>序号</td>
+                    <td>城市ID</td>
+                    <td>城市名</td>
+                    <td>所属省名</td>
+                    <td>操作</td>
+                </tr>
+                <tbody id="cityList"></tbody>
+            </table>
+            <ul class="pagination pull-right" style="margin: 0">
+            </ul>
+        </div>
+        <div class="panel-footer text-right">
+            ssm基本框架
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(function () {
+        getCityList(1);
+        getAllProvince();
+    })
+    //加载表格和分页
+    function getCityList(pageNo) {
+        let param={pageNo:pageNo,pageSize:5,cname:$("#search").val(),pid:Number($("#province").val())}
+        $.ajax({
+            url:"/city/getCityList.do",
+            method:"POST",
+            data:JSON.stringify(param),
+            contentType:"application/json;charset=UTF-8",
+            dataType:"json",
+            success:function (data) {
+                let c="";
+                $(data.list).each(function (i,v) {
+                    c=c+"<tr>";
+                    c=c+"<td><input type='checkbox' value='"+v.cid+"'></td>";
+                    c=c+"<td>"+Number(i+1)+"</td>";
+                    c=c+"<td>"+v.cid+"</td>";
+                    c=c+"<td>"+v.cname+"</td>";
+                    c=c+"<td>"+v.pname+"</td>";
+                    c=c+"<td><button class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-pencil'></span>&nbsp;修改</button></td>";
+                    c=c+"</tr>";
+                })
+                $("#cityList").html(c);
+                let p=""
+                for(i=1;i<=data.totalPage;i++){
+                    p=p+"<li><a href='javascript:getCityList("+i+")'>"+i+"</a></li>";
+                }
+                $(".pagination").html(p);
+                $(".pagination li a:contains("+data.pageNo+")").css("background-color","blue").css("color","white");
+            },
+            error:function (data) {
+                layer.msg("ajax请求(市)失败！",{icon:7})
+            }
+        })
+    }
+    //全选
+    $("#checkAll").click(function () {
+        $("#cityList input:checkbox").prop("checked",$(this).is(":checked"));
+    })
+    //删除
+    function delCitys(){
+        let arr=$("#cityList input:checkbox:checked");
+        if(arr.length<=0){
+            layer.msg("必须选中至少一条数据！",{icon:7});
+            return
+        }
+        layer.confirm("确认删除吗？",{icon:3,title:"系统提示"},function (index) {
+            let cids=new Array();
+            for(let i=0;i<arr.length;i++){
+                cids.push(arr[i].value);
+            }
+            let i=layer.load(2);
+            $.ajax({
+                url:"/city/delCityByIds.do",
+                method:"POST",
+                data: "cids="+cids,
+                //contentType: "application/json;charset=UTF-8",
+                dataType:"json",
+                success:function (data) {
+                    layer.msg(data.msg,{icon:data.i});
+                    getCityList(1);
+                    layer.close(i);
+                },
+                error:function (data) {
+                    layer.msg("ajax请求(删除)出错！",{icon:7})
+                }
+            })
+            layer.close(index);
+        })
+    }
+    function getAllProvince() {
+        $.ajax({
+            url:"/province/getAllProvince.do",
+            method:"GET",
+            dataType:"json",
+            success:function (data) {
+                let p="";
+                $(data).each(function (i,v) {
+                    p=p+"<option value='"+v.pid+"'>-"+v.pname+"-</option>"
+                })
+                $("#province").append(p);
+            },
+            error:function (data) {
+                layer.msg("ajax请求(省)出错！",{icon:7})
+            }
+        })
+    }
+</script>
+</html>

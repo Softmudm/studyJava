@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.wx.dao.ProvinceDao"><!-- 命名空间(使用接口时这里必须写dao层接口全类名) -->
+    <resultMap id="provinceMap" type="com.sz.wx.entity.Province">
+        <id property="pid" column="pid" javaType="int" jdbcType="INTEGER"/>
+        <result property="pname" column="pname" javaType="string" jdbcType="VARCHAR"/>
+        <collection property="list" javaType="java.util.ArrayList" ofType="com.sz.wx.entity.City">
+            <id property="cid" column="cid" javaType="int" jdbcType="INTEGER"/>
+            <result property="cname" column="cname" javaType="string" jdbcType="VARCHAR"/>
+            <result property="pid" column="pid" javaType="int" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <!-- 查询所有省的信息 -->
+    <select id="getAllProvince" resultType="com.sz.wx.entity.Province">
+        select pid,pname from t_province
+    </select>
+    <!-- 分页查询省的信息(省 一对多 市) -->
+    <!-- 一对多查询时分页出来的数据会比预期的少，因为是先分页在放进list的 -->
+    <select id="getProvinceList" resultMap="provinceMap" parameterType="java.util.Map">
+        <bind name="key_offset" value="(pageNo-1)*pageSize"/>
+        select p.pid,p.pname,c.cid,c.cname from t_province p
+        left join t_city c on p.pid=c.pid
+        where p.pid in (select pp.pid from (select pid from t_province limit #{key_offset},#{pageSize}) as pp)
+        <if test="pname!=null and pname!=''">
+            and p.pname like concat('%',#{pname},'%')
+        </if>
+    </select>
+    <!-- 分页查询省的信息(省 一对多 市) -->
+    <select id="getProvinceCount" resultType="int" parameterType="java.util.Map">
+        select count(*) from t_province
+        <where>
+            <if test="pname!=null and pname!=''">
+                pname like concat('%',#{pname},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

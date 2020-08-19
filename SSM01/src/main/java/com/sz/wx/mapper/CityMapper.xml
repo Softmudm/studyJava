@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.wx.dao.CityDao"><!-- 命名空间(使用接口时这里必须写dao层接口全类名) -->
+
+    <!-- 分页查询城市信息 -->
+    <select id="getCityList1" resultType="com.sz.wx.entity.City" parameterType="java.util.Map">
+        <!-- 这里是处理分页计算的问题 -->
+        <bind name="key_offset" value="(pageNo-1)*pageSize"></bind>
+        select c.cid,c.cname,c.pid,p.pname from t_city c
+        left join t_province p on c.pid=p.pid
+        <where>
+            <if test="cname!=null and cname!=''">
+                cname like concat('%',#{cname},'%')
+            </if>
+        </where>
+        limit #{key_offset},#{pageSize}
+    </select>
+    <!-- 分页查询城市信息 -->
+    <select id="getCityList" resultType="com.sz.wx.entity.City" parameterType="java.util.Map">
+        <!-- 这里是处理分页计算的问题 -->
+        <bind name="key_offset" value="(pageNo-1)*pageSize"></bind>
+        select c.cid,c.cname,c.pid,p.pname from t_city c
+        left join t_province p on c.pid=p.pid
+        <where>
+            <if test="pid!=null and pid!=''">
+                and c.pid=#{pid}
+            </if>
+            <if test="cname!=null and cname!=''">
+                and cname like concat('%',#{cname},'%')
+            </if>
+        </where>
+        limit #{key_offset},#{pageSize}
+    </select>
+    <!-- 分页查询总数 -->
+    <select id="getCityCount1" resultType="int" parameterType="java.util.Map">
+        select count(1) from t_city c
+        left join t_province p on c.pid=p.pid
+        <where>
+            <if test="cname!=null and cname!=''">
+                cname like concat('%',#{cname},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getCityCount" resultType="int" parameterType="java.util.Map">
+        select count(1) from t_city c
+        left join t_province p on c.pid=p.pid
+        <where>
+            <if test="pid!=null and pid!=0">
+                and c.pid=#{pid}
+            </if>
+            <if test="cname!=null and cname!=''">
+                and cname like concat('%',#{cname},'%')
+            </if>
+        </where>
+    </select>
+    <!-- 批量删除城市 -->
+    <delete id="delCityByIds" parameterType="java.util.ArrayList">
+        delete from t_city where cid in
+        <!-- 传入参数为数组时 -->
+        <foreach collection="array" item="cid" open="(" close=")" separator=",">
+            #{cid}
+        </foreach>
+    </delete>
+
+</mapper>
