@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>在线考试系统</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css">
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+    <style type="text/css">
+        form div{
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="width: 550px;margin-top: 100px">
+    <div class="panel panel-info">
+        <div class="panel-heading text-center" style="letter-spacing:30px;">
+            <h3>注册页面</h3>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="col-sm-8 col-sm-offset-2 input-group">
+                    <span class="input-group-addon">账号：</span>
+                    <input id="userName" type="text" class="form-control" placeholder="请输入账号">
+                </div>
+                <div class="col-sm-8 col-sm-offset-2 input-group">
+                    <span class="input-group-addon">密码：</span>
+                    <input id="userPassword" type="password" class="form-control"placeholder="请输入密码">
+                </div>
+            </form>
+            <div class="col-sm-8 col-sm-offset-2 input-group">
+                <button id="registbtn" class="btn btn-block btn-primary" style="letter-spacing:30px;">注册</button>
+                <a href="/login.html" class="btn btn-block btn-warning" style="letter-spacing:30px;">登录</a>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //登录按钮
+    $("#registbtn").click(function () {
+        let userName=$("#userName").val();
+        let userPassword=$("#userPassword").val();
+        if(!(userName||userPassword)){
+            layer.msg("账号和密码不能为空！");
+            return;
+        }
+        let u={"userName":userName,"userPassword":userPassword};
+        $.ajax({
+            url:"/user/regist.do",
+            method:"POST",
+            data:JSON.stringify(u),
+            contentType:"application/json;charset=UTF-8",
+            dataType:"json",
+            success:function (data) {
+                layer.alert(data.message,{btn:"去登录"},function (i) {
+                    layer.close(i)
+                    window.location.href="/login.html";
+                });
+            },
+            error:function (data) {
+                layer.msg("Ajax请求错误！");
+            }
+        })
+    })
+</script>
+</html>

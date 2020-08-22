@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>在线考试系统</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css">
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+</head>
+<body onload="getPaperList()">
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center" style="letter-spacing:30px;">
+            <h3>试卷列表</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline" style="margin-bottom: 10px">
+                <input id="keyword" class="form-control" placeholder="名称关键字">
+                <button onclick="getPaperList()" type="button" class="btn btn-primary">查询</button>
+                <a href="/score.html" class='btn btn-warning pull-right'>我的试卷</a>
+            </form>
+            <table class="table table-hover table-bordered table-striped text-center">
+                <tr>
+                    <td>序号</td>
+                    <td>试卷编号</td>
+                    <td>试卷名称</td>
+                    <td>试卷分数</td>
+                    <td>创建时间</td>
+                    <td>操作</td>
+                </tr>
+                <tbody id="paperList"></tbody>
+                <ul class="pagination pull-right" style="margin: 0">
+                </ul>
+            </table>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //获取试卷列表
+    function getPaperList() {
+        let pageIndex=1;
+        let d={"pageIndex":pageIndex,"pageSize":5,"paperName":$("#keyword").val()}
+        $.ajax({
+            url:"/paper/getPaperList.do",
+            method:"POST",
+            data:JSON.stringify(d),
+            contentType:"application/json;charset=UTF-8",
+            dataType:"json",
+            success:function (data) {
+                let paper="";
+                $(data.list).each(function (i,v) {
+                    paper=paper+"<tr>";
+                    paper=paper+"<td>"+Number(i+1)+"</td>";
+                    paper=paper+"<td>"+v.paperid+"</td>";
+                    paper=paper+"<td>"+v.papername+"</td>";
+                    paper=paper+"<td>"+v.remarks+"</td>";
+                    paper=paper+"<td>"+v.createtime+"</td>";
+                    paper=paper+"<td><a href='paperDetail.html?paperid="+v.paperid+"' class='btn btn-sm btn-success'>参加考试</a></td>";
+                    paper=paper+"</tr>";
+                })
+                $("#paperList").html(paper);
+            },
+            error:function (data) {
+                layer.msg("Ajax请求错误！");
+                window.location.href="/login.html";
+            }
+        })
+    }
+</script>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在线考试系统</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css">
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+    <style type="text/css">
+        .panel-heading span{
+            margin-right: 50px;
+            color: orange;
+        }
+        h4{
+            color: white;
+        }
+        input,label,textarea{
+            margin-left: 20px;
+        }
+        .div1{
+            margin-top: 10px;
+            color: red;
+            padding-left: 20px;
+            border: 1px dashed red;
+        }
+        .div1 p{
+            margin: 0;
+        }
+        .div2{
+            float: right;
+            background-image: url("img/YesOrNo.jpg");
+            height: 80px;
+            width: 80px;
+            background-size: 175px;
+            background-position: 1px -33px;
+        }
+        .div3{
+            float: right;
+            background-image: url("img/YesOrNo.jpg");
+            height: 80px;
+            width: 80px;
+            background-size: 175px;
+            background-position: -83px -33px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+            <h3 id="paperTitle" style="letter-spacing:30px;"></h3>
+            试卷类型:<span id="paperType"></span>
+            阅卷方式:<span id="method"></span>
+            总分:<span id="remarks"></span>
+        </div>
+        <div class="panel-body">
+            <form id="paperForm">
+                <table id="itemList" class="table table-bordered">
+                </table>
+            </form>
+            <a href="/score.html" class="btn btn-danger btn-block">返回我的试卷列表</a>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        //获取上个页面传来的试卷id和分数id
+        var param=window.location.href.split("?")[1].split("&");
+        let paperid=param[1].split("=")[1]
+        let scoreid=param[0].split("=")[1]
+        getPaperInfo(paperid);
+        getScoreDetail(scoreid);
+    })
+    //获取试卷总体基本信息
+    function getPaperInfo(paperid) {
+        $.ajax({
+            url:"/paper/getPaperByPaperid.do",
+            method:"POST",
+            data:JSON.stringify({"paperid":paperid}),
+            contentType:"application/json;charset=UTF-8",
+            dataType:"json",
+            success:function (data) {
+                $("#paperTitle").text(data.papername);
+                $("#paperType").text(data.papertype);
+                $("#method").text(data.method);
+                $("#remarks").text(data.remarks);
+            },
+            error:function (data) {
+                layer.msg("Ajax请求错误！");
+                //window.location.href="/login.html";
+            }
+        })
+    }
+    //获取试卷题目
+    function getScoreDetail(scoreId) {
+        $.ajax({
+            url:"/scoredetail/getDetailList.do",
+            method:"POST",
+            data:JSON.stringify({"scoreId":scoreId}),
+            contentType:"application/json;charset=UTF-8",
+            dataType:"json",
+            success:function (data) {
+                let i="";
+                let i1="";
+                let i2="";
+                let i3="";
+                let i4="";
+                let i5="";
+                let cl="";
+                let n1=0,n2=0,n3=0,n4=0,n5=0;
+                $(data).each(function (i,v) {
+                    //判断图片放哪一张
+                    if(v.uanswer==v.ekey){
+                        cl="div3";
+                    }else{
+                        cl="div2";
+                    }
+                    switch (v.etype) {
+                        //填空
+                        case 1:
+                            n1++;
+                            if(i1==""){
+                                i1="<tr id='i1'class='bg-primary'><td><h4>填空题</h4></td></tr>"
+                            }
+                            i1=i1+"<tr><td class='bg-info' style='font-weight:bold'>第"+n1+"题【填空题】("+v.escore+"分)："+v.ename+"</td></tr>"
+                            i1=i1+"<tr><td>";
+                            i1=i1+"<input name='"+v.eid+"' style='background:transparent;border-left: 0;border-top: 0;border-right: 0;outline: none'>";
+                            i1=i1+"<div class='div1'><div class='"+cl+"'></div><p>我的答案："+v.uanswer+"</p><p>正确答案："+v.ekey+"</p><p>实际得分："+v.upoint+"</p><p>试题解析："+v.ehints+"</p></div>";
+                            i1=i1+"</td></tr>";
+                            break;
+                        //判断
+                        case 2:
+                            n2++;
+                            if(i2==""){
+                                i2="<tr id='i2' class='bg-primary'><td><h4>判断题</h4></td></tr>";
+                            }
+                            i2=i2+"<tr><td class='bg-info' style='font-weight:bold'>第\"+(n1+"+n2+")+\"题【判断题】("+v.escore+"分)："+v.ename+"</td></tr>";
+                            i2=i2+"<tr><td>";
+                            i2=i2+"<div class='radio'><label><input type='radio' name='"+v.eid+"' value='true'>正确</label></div>";
+                            i2=i2+"<div class='radio'><label><input type='radio' name='"+v.eid+"' value='false'>错误</label></div>";
+                            i2=i2+"<div class='div1'><div class='"+cl+"'></div><p>我的答案："+v.uanswer+"</p><p>正确答案："+v.ekey+"</p><p>实际得分："+v.upoint+"</p><p>试题解析："+v.ehints+"</p></div>";
+                            i2+i2+"</td></tr>";
+                            break;
+                        //单选
+                        case 3:
+                            n3++;
+                            if(i3==""){
+                                i3="<tr id='i3' class='bg-primary'><td><h4>单选题</h4></td></tr>"
+                            }
+                            i3=i3+"<tr><td class='bg-info' style='font-weight:bold'>第\"+(n1+n2+"+n3+")+\"题【单选题】("+v.escore+"分)："+v.ename+"</td></tr>";
+                            i3=i3+"<tr><td>";
+                            for(let i=0;i<=10;i++){
+                                let m=String.fromCharCode((97+i));
+                                let flag;
+                                eval('flag=v.e'+m);
+                                if(flag){
+                                    i3=i3+"<div class='radio'><label><input type='radio' name='"+v.eid+"' value='"+m+"'>"+m.toUpperCase()+"."+flag+"</label></div>";
+                                }
+                            }
+                            i3=i3+"<div class='div1'><div class='"+cl+"'></div><p>我的答案："+v.uanswer+"</p><p>正确答案："+v.ekey+"</p><p>实际得分："+v.upoint+"</p><p>试题解析："+v.ehints+"</p></div>";
+                            i3=i3+"</td></tr>";
+                            break;
+                        //多选
+                        case 4:
+                            n4++;
+                            if(i4==""){
+                                i4="<tr id='i4' class='bg-primary'><td><h4>多选题</h4></td></tr>"
+                            }
+                            i4=i4+"<tr><td class='bg-info' style='font-weight:bold'>第\"+(n1+n2+n3+"+n4+")+\"题【多选题】("+v.escore+"分)："+v.ename+"</td></tr>";
+                            i4=i4+"<tr><td>";
+                            for(let i=0;i<=10;i++){
+                                let m=String.fromCharCode((97+i));
+                                let flag;
+                                eval('flag=v.e'+m);
+                                if(flag){
+                                    i4=i4+"<div class='checkbox'><label><input type='checkbox' name='"+v.eid+"' value='"+m+"'>"+m.toUpperCase()+"."+flag+"</label></div>";
+                                }
+                            }
+                            i4=i4+"<div class='div1'><div class='"+cl+"'></div><p>我的答案："+v.uanswer+"</p><p>正确答案："+v.ekey+"</p><p>实际得分："+v.upoint+"</p><p>试题解析："+v.ehints+"</p></div>";
+                            i4=i4+"</td></tr>";
+                            break;
+                        //问答
+                        case 5:
+                            n5++;
+                            if(i5==""){
+                                i5="<tr id='i5' class='bg-primary'><td><h4>问答题</h4></td></tr>"
+                            }
+                            i5=i5+"<tr><td class='bg-info' style='font-weight:bold'>第\"+(n1+n2+n3+n4+"+n5+")+\"题【问答题】("+v.escore+"分)："+v.ename+"</td></tr>"
+                            i5=i5+"<tr><td>";
+                            i5=i5+"<textarea name='"+v.eid+"' rows='5' style='width: 98%'></textarea>";
+                            i5=i5+"<div class='div1'><div class='"+cl+"'></div><p>我的答案："+v.uanswer+"</p><p>正确答案："+v.ekey+"</p><p>实际得分："+v.upoint+"</p><p>试题解析："+v.ehints+"</p></div>"
+                            i5=i5+"</td></tr>";
+                            break;
+                    }
+                })
+                //如果没有题目则隐藏对应标题
+                for(let t=1;t<=5;t++){
+                    let o;
+                    eval("o=i"+t);
+                    if(o==""){
+                        $("#"+"i"+t).hide();
+                    }
+                }
+                //给题号赋值
+                i="i=\""+i1+i2+i3+i4+i5+"\"";
+                eval(i);
+                $("#itemList").append(i);
+            },
+            error:function (data) {
+                layer.msg("Ajax请求错误！");
+                //window.location.href="/login.html";
+            }
+        })
+    }
+</script>
+</html>
