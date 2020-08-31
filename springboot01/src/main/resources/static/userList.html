@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css"/>
+
+    <!-- 引入AngularJS分页样式css -->
+    <link rel="stylesheet" href="/angularjs/pagination.css"/>
+
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+
+    <!-- 引入AngularJS和分页js文件 -->
+    <script type="text/javascript" src="/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="/angularjs/pagination.js"></script>
+    <script type="text/javascript">
+        var app=angular.module('myApp',['pagination']);
+        app.controller('myController',function ($scope,$http) {
+            $scope.flag=true;
+            $scope.paginationConf={
+                currentPage:1,//当前页
+                itemsPerPage:2,//一页记录数
+                totalItems:100,//总记录数
+                perPageOptions:[1,2,3,4,5],
+                //页码或页面大小改变自动调用
+                onChange:function () {
+                    $scope.getUserList($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
+                }
+            }
+            $scope.getUserList=function (pageIndex,pageSize) {
+                if(!pageIndex){
+                    pageIndex=1;
+                }
+                if(!pageSize){
+                    pageSize=2;
+                }
+                let u={pageIndex:pageIndex,pageSize:pageSize,userName:$scope.keyword};
+                $http({
+                    url:"/user/getUserList",
+                    method:"POST",
+                    data:JSON.stringify(u),
+                    contentType:"application/json;charset=UTF-8",
+                    dataType:"json",
+                }).success(function (data) {
+                    $scope.userList=data.list;
+                    $scope.paginationConf.totalItems=data.totalNum;
+                })
+            }
+            $scope.openAdd=function () {
+                $scope.myModalTitle="新增页面";
+                $scope.user={};
+                $("#myModal").modal("show");
+            }
+            $scope.openUpdate=function (userid) {
+                $scope.myModalTitle="修改页面";
+                $http({
+                    url:"/user/getUserByUserid",
+                    method:"POST",
+                    data:JSON.stringify({userid:userid}),
+                    contentType:"application/json;charset=UTF-8",
+                    dataType:"json",
+                }).success(function (data) {
+                    $scope.user=data;
+                })
+                $("#myModal").modal("show");
+            }
+            $scope.deleteUser=function (userid) {
+                $http({
+                    url:"/user/deleteUserByUserid",
+                    method:"POST",
+                    data:JSON.stringify({userid:userid}),
+                    contentType:"application/json;charset=UTF-8",
+                    dataType:"json",
+                }).success(function (data) {
+                    $scope.getUserList();
+                    layer.msg(data.message,{icon:data.i});
+                })
+            }
+            $scope.subModal=function () {
+                if($scope.user.userid){
+                    $http({
+                        url:"/user/updateUser",
+                        method:"POST",
+                        data:JSON.stringify({user:$scope.user}),
+                        contentType:"application/json;charset=UTF-8",
+                        dataType:"json",
+                    }).success(function (data) {
+                        layer.msg(data.message,{icon:data.i});
+                    })
+                }else{
+                    $http({
+                        url:"/user/addUser",
+                        method:"POST",
+                        data:JSON.stringify({user:$scope.user}),
+                        contentType:"application/json;charset=UTF-8",
+                        dataType:"json",
+                    }).success(function (data) {
+                        layer.msg(data.message,{icon:data.i});
+                    })
+                }
+                $scope.getUserList();
+                $("#myModal").modal("hide");
+            }
+        })
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading text-center">
+            <h4>用户列表</h4>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline" style="margin-bottom: 15px">
+                <button type="button" class="btn btn-primary" ng-click="openAdd()">新增</button>
+                <div class="pull-right">
+                    <input ng-model="keyword" class="form-control" placeholder="用户名关键字">
+                    <button ng-click="getUserList()" class="btn btn-success">查询</button>
+                </div>
+            </form>
+            <table class="table table-bordered table-striped table-hover text-center">
+                <tr>
+                    <td>序号</td>
+                    <td>用户ID</td>
+                    <td>用户名</td>
+                    <td>用户密码</td>
+                    <td>操作</td>
+                </tr>
+                <tr ng-repeat="u in userList">
+                    <td>{{$index+1}}</td>
+                    <td>{{u.userid}}</td>
+                    <td>{{u.username}}</td>
+                    <td>{{u.userpassword}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" ng-click="openUpdate(u.userid)">修改</button>
+                        <button class="btn btn-sm btn-danger" ng-click="deleteUser(u.userid)">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <tm-pagination conf="paginationConf"></tm-pagination>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer">
+
+        </div>
+    </div>
+</div>
+<!-----------------------------模态框开始------------------------------->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalTitle">{{myModalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <input type="hidden" ng-model="user.userid">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">用户名：</label>
+                        <div class="col-sm-6">
+                            <input ng-model="user.username" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">密码：</label>
+                        <div class="col-sm-6">
+                            <input ng-model="user.userpassword" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="subModal()">提交</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-----------------------------模态框结束------------------------------->
+</body>
+</html>
