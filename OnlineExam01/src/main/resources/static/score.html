@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>在线考试系统</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css">
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+</head>
+<body onload="getScoreList()">
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center" style="letter-spacing:30px;">
+            <h3>我的试卷</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline" style="margin-bottom: 10px">
+                <input id="keyword" class="form-control" placeholder="名称关键字">
+                <button onclick="getScoreList()" type="button" class="btn btn-primary">查询</button>
+                <a href="/paper.html" class='btn btn-warning pull-right'>返回试卷列表</a>
+            </form>
+            <table class="table table-hover table-bordered table-striped text-center">
+                <tr>
+                    <td>序号</td>
+                    <td>试卷编号</td>
+                    <td>试卷名称</td>
+                    <td>试卷分数</td>
+                    <td>我的分数</td>
+                    <td>正确题数</td>
+                    <td>错误题数</td>
+                    <td>操作</td>
+                </tr>
+                <tbody id="scoreList"></tbody>
+                <ul class="pagination pull-right" style="margin: 0">
+                </ul>
+            </table>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //获取试卷列表
+    function getScoreList() {
+        let pageIndex=1;
+        let d={"pageIndex":pageIndex,"pageSize":5,"paperName":$("#keyword").val()}
+        $.ajax({
+            url:"/score/getScoreList",
+            method:"POST",
+            data:JSON.stringify(d),
+            contentType:"application/json;charset=UTF-8",
+            dataType:"json",
+            success:function (data) {
+                let s="";
+                $(data.list).each(function (i,v) {
+                    s=s+"<tr>";
+                    s=s+"<td>"+Number(i+1)+"</td>";
+                    s=s+"<td>"+v.paperid+"</td>";
+                    s=s+"<td>"+v.papername+"</td>";
+                    s=s+"<td>"+v.remarks+"</td>";
+                    s=s+"<td>"+v.score+"</td>";
+                    s=s+"<td>"+v.rights+"</td>";
+                    s=s+"<td>"+v.errors+"</td>";
+                    s=s+"<td><a href='scoreDetail.html?scoreid="+v.scoreid+"&paperid="+v.paperid+"' class='btn btn-sm btn-success'>查看试卷</a></td>";
+                    s=s+"</tr>";
+                })
+                $("#scoreList").html(s);
+            },
+            error:function (data) {
+                layer.msg("Ajax请求错误！");
+                window.location.href="/login.html";
+            }
+        })
+    }
+</script>
+</html>

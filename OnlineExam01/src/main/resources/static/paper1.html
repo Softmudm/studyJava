@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular学习页面</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css"/>
+
+    <!-- 引入AngularJS分页样式css -->
+    <link rel="stylesheet" href="/angularjs/pagination.css"/>
+
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+
+    <!-- 引入AngularJS和分页js文件 -->
+    <script type="text/javascript" src="/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="/angularjs/pagination.js"></script>
+    <!-- 自己写的js代码 -->
+    <script type="text/javascript">
+        //获取angular应用对象
+        var app1=angular.module('myApp1',[]);
+        //获取控制器，再在控制其中获取$scope对象,服务是一个函数或对象,$location用来获取当前地址,$http服务用来请求远程接口数据
+        app1.controller('myController1',function ($scope,$location,$http) {
+            $scope.value1='测试通过控制器操纵数值';
+            $scope.url=$location.absUrl();
+            //在$scope中定义一个函数
+            $scope.getAllPaper=function () {
+                $http({
+                    url:"/paper/getPaperList",
+                    method:"POST",
+                    data:JSON.stringify({}),
+                    contentType:"application/json;charset=UTF-8",
+                    dataType:"json"
+                }).success(function (data) {
+                    $scope.paperList=data;
+                })
+            }
+        })
+        //这个[]里面应该是写以来的模块的
+        var app2=angular.module('myApp2',['pagination']);
+        app2.controller('myController2',function ($scope,$http) {
+            $scope.paginationConf={
+                currentPage:1,//当前页
+                itemsPerPage:3,//一页记录数
+                totalItems:100,//总记录数
+                perPageOptions:[1,2,3,4,5],
+                //页码或页面大小改变自动调用
+                onChange:function () {
+                    $scope.getPaperList($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
+                }
+            }
+            $scope.getPaperList=function(pageIndex,pageSize){
+                let d={"pageIndex":pageIndex,"pageSize":pageSize,"paperName":$("#keyword").val()}
+                $http({
+                    url:"/paper/getPaperList",
+                    method:"POST",
+                    data:JSON.stringify(d),
+                    contentType:"application/json;charset=UTF-8",
+                    dataType:"json",
+                }).success(function (data) {
+                    $scope.paperList=data.list;
+                    $scope.paginationConf.totalItems=data.totalNum;
+                })
+            }
+        })
+        //一般一个页面一个app，但是加载多个的话需要在这里手动把第二个app的dom对象传给angular
+        angular.element(document).ready(
+            function (){
+                angular.bootstrap($("#myApp2"),['myApp2']);
+            }
+        );
+    </script>
+</head>
+<body>
+<!-- 这个div交给AngularJS应用管理 --><!--定义控制器-->
+<div ng-app="myApp1" ng-controller="myController1" ng-init="array=[0,1,2,3,4,5];getAllPaper()">
+    <!-- 将input值域和text变量绑定 -->
+    <input ng-model="text">
+    <!-- 双括号相当于ng-bind -->
+    {{text}}
+    <!-- array在上面的ng-init中被初始化了 -->
+    <span style="color: red">{{array[2]}}</span>
+    <span style="color: blue">{{value1}}</span>
+    <!-- 过滤器测试,通过"|"符号添加到表达式中 -->
+    <!-- 这个currency是添加美元符号 -->
+    <span style="color: orange">{{3344.22|currency}}</span>
+    <!-- 这个uppercase是小写转换大写 -->
+    <span style="color: yellow">{{'abcd'|uppercase}}</span>
+    <span style="color: red">{{url}}</span>
+    <span style="color: black">{{paperList}}</span>
+</div>
+
+
+<div class="container" id="myApp2" ng-controller="myController2" >
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center" style="letter-spacing:30px;">
+            <h3>试卷列表</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline" style="margin-bottom: 10px">
+                <input id="keyword" class="form-control" placeholder="名称关键字">
+                <button type="button" ng-click="getPaperList(1,2)" class="btn btn-primary">查询</button>
+                <a href="/score.html" class='btn btn-warning pull-right'>我的试卷</a>
+            </form>
+            <table class="table table-hover table-bordered table-striped text-center">
+                <tr>
+                    <td>序号</td>
+                    <td>试卷编号</td>
+                    <td>试卷名称</td>
+                    <td>试卷分数</td>
+                    <td>创建时间</td>
+                    <td>操作</td>
+                </tr>
+                <tr ng-repeat="paper in paperList">
+                    <td>{{$index+1}}</td>
+                    <td>{{paper.paperid}}</td>
+                    <td>{{paper.papername}}</td>
+                    <td>{{paper.remarks}}</td>
+                    <td>{{paper.createtime}}</td>
+                    <td><a href='paperDetail.html?paperid={{paper.paperid}}' class='btn btn-sm btn-success'>参加考试</a></td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <tm-pagination conf="paginationConf"></tm-pagination>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+</html>

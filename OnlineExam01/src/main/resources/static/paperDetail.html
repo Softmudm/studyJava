@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在线考试系统</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css">
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+    <style type="text/css">
+        .panel-heading span{
+            margin-right: 50px;
+            color: orange;
+        }
+        h4{
+            color: white;
+        }
+        input,label,textarea{
+            margin-left: 20px;
+        }
+        .timebox{
+            position: fixed;
+            background-color: yellow;
+            height: 80px;
+            width: 100px;
+            left: 1247px;
+        }
+    </style>
+</head>
+<body>
+<div class="timebox">剩余时间：<p id="time">100s</p></div>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+            <h3 id="paperTitle" style="letter-spacing:30px;"></h3>
+            试卷类型:<span id="paperType"></span>
+            阅卷方式:<span id="method"></span>
+            总分:<span id="remarks"></span>
+        </div>
+        <div class="panel-body">
+            <form id="paperForm">
+            <table id="itemList" class="table table-bordered">
+                <input type="hidden" id="paperid" name="paperid" value=""/>
+            </table>
+            </form>
+            <button class="btn btn-warning btn-block" onclick="sub()">交卷</button>
+            <a href="/paper.html" class="btn btn-danger btn-block">返回试卷列表</a>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        //获取上个页面传来的试卷id
+        var paperid=window.location.href.split("?")[1].split("=")[1];
+        $("#paperid").val(paperid);
+        getPaperInfo(paperid);
+        getPaperDetail(paperid);
+    })
+    //获取试卷总体基本信息
+    function getPaperInfo(paperid) {
+        $.ajax({
+            url:"/paper/getPaperByPaperid",
+            method:"POST",
+            data:JSON.stringify({"paperid":paperid}),
+            contentType:"application/json;charset=UTF-8",
+            dataType:"json",
+            success:function (data) {
+                $("#paperTitle").text(data.papername);
+                $("#paperType").text(data.papertype);
+                $("#method").text(data.method);
+                $("#remarks").text(data.remarks);
+            },
+            error:function (data) {
+                layer.msg("Ajax请求错误！");
+                //window.location.href="/login.html";
+            }
+        })
+    }
+    //提交答卷
+    function sub() {
+        let array=$("#paperForm").serializeArray();
+        let o={};
+        $(array).each(function (i,v) {
+            if(v.value==""){
+               return true
+            }
+            if(!o[v.name]){
+                o[v.name]=v.value;
+            }else{
+                o[v.name]=o[v.name]+v.value;
+            }
+
+        })
+        layer.confirm("确认提交吗？",{icon:3,title:"系统提示:"},function (index) {
+            let i=layer.load(2);
+            $.ajax({
+                url:"/score/countSocre",
+                method:"POST",
+                data:JSON.stringify(o),
+                contentType:"application/json;charset=UTF-8",
+                dataType:"json",
+                success:function (data) {
+                    layer.close(i);
+                    layer.alert("你的"+$("#paperTitle").text()+"考试成绩为:"+data.message,function (index1) {
+                        layer.close(index1);
+                        window.location.href="/paper.html";
+                    })
+                },
+                error:function (data) {
+                    layer.msg("Ajax请求错误！");
+                    //window.location.href="/login.html";
+                }
+            })
+            layer.close(index);
+        })
+    }
+    //获取试卷题目
+    function getPaperDetail(paperid) {
+        $.ajax({
+            url:"/items/getItemsListByPaperid",
+            method:"GET",
+            data:{paperid:paperid},
+            dataType:"json",
+            success:function (data) {
+                let i="";
+                let i1="";
+                let i2="";
+                let i3="";
+                let i4="";
+                let i5="";
+                let n1=0,n2=0,n3=0,n4=0,n5=0;
+                $(data).each(function (i,v) {
+                    switch (v.etype) {
+                        //填空
+                        case 1:
+                            n1++;
+                            if(i1==""){
+                                i1="<tr id='i1'class='bg-primary'><td><h4>填空题</h4></td></tr>"
+                            }
+                            i1=i1+"<tr><td class='bg-info' style='font-weight:bold'>第"+n1+"题【填空题】("+v.escore+"分)："+v.ename+"</td></tr>"
+                            i1=i1+"<tr><td><input name='"+v.eid+"' style='background:transparent;border-left: 0;border-top: 0;border-right: 0;outline: none'></td></tr>"
+                            break;
+                        //判断
+                        case 2:
+                            n2++;
+                            if(i2==""){
+                                i2="<tr id='i2' class='bg-primary'><td><h4>判断题</h4></td></tr>";
+                            }
+                            i2=i2+"<tr><td class='bg-info' style='font-weight:bold'>第\"+(n1+"+n2+")+\"题【判断题】("+v.escore+"分)："+v.ename+"</td></tr>";
+                            i2=i2+"<tr><td>";
+                            i2=i2+"<div class='radio'><label><input type='radio' name='"+v.eid+"' value='正确'>正确</label></div>";
+                            i2=i2+"<div class='radio'><label><input type='radio' name='"+v.eid+"' value='错误'>错误</label></div>";
+                            i2+i2+"</td></tr>";
+                            break;
+                        //单选
+                        case 3:
+                            n3++;
+                            if(i3==""){
+                                i3="<tr id='i3' class='bg-primary'><td><h4>单选题</h4></td></tr>"
+                            }
+                            i3=i3+"<tr><td class='bg-info' style='font-weight:bold'>第\"+(n1+n2+"+n3+")+\"题【单选题】("+v.escore+"分)："+v.ename+"</td></tr>"
+                            i3=i3+"<tr><td>";
+                            for(let i=0;i<=10;i++){
+                                let m=String.fromCharCode((97+i));
+                                let flag;
+                                eval('flag=v.e'+m);
+                                if(flag){
+                                    i3=i3+"<div class='radio'><label><input type='radio' name='"+v.eid+"' value='"+m+"'>"+m.toUpperCase()+"."+flag+"</label></div>";
+                                }
+                            }
+                            i3=i3+"</td></tr>";
+                            break;
+                        //多选
+                        case 4:
+                            n4++;
+                            if(i4==""){
+                                i4="<tr id='i4' class='bg-primary'><td><h4>多选题</h4></td></tr>"
+                            }
+                            i4=i4+"<tr><td class='bg-info' style='font-weight:bold'>第\"+(n1+n2+n3+"+n4+")+\"题【多选题】("+v.escore+"分)："+v.ename+"</td></tr>"
+                            i4=i4+"<tr><td>";
+                            for(let i=0;i<=10;i++){
+                                let m=String.fromCharCode((97+i));
+                                let flag;
+                                eval('flag=v.e'+m);
+                                if(flag){
+                                    i4=i4+"<div class='checkbox'><label><input type='checkbox' name='"+v.eid+"' value='"+m+"'>"+m.toUpperCase()+"."+flag+"</label></div>";
+                                }
+                            }
+                            i4=i4+"</td></tr>";
+                            break;
+                        //问答
+                        case 5:
+                            n5++;
+                            if(i5==""){
+                                i5="<tr id='i5' class='bg-primary'><td><h4>问答题</h4></td></tr>"
+                            }
+                            i5=i5+"<tr><td class='bg-info' style='font-weight:bold'>第\"+(n1+n2+n3+n4+"+n5+")+\"题【问答题】("+v.escore+"分)："+v.ename+"</td></tr>"
+                            i5=i5+"<tr><td><textarea name='"+v.eid+"' rows='5' style='width: 98%'></textarea></td></tr>"
+                            break;
+                    }
+                })
+                //如果没有题目则隐藏对应标题
+                for(let t=1;t<=5;t++){
+                    let o;
+                    eval("o=i"+t);
+                    if(o==""){
+                        $("#"+"i"+t).hide();
+                    }
+                }
+                //给题号赋值
+                i="i=\""+i1+i2+i3+i4+i5+"\"";
+                eval(i);
+                $("#itemList").append(i);
+            },
+            error:function (data) {
+                layer.msg("Ajax请求错误！");
+                //window.location.href="/login.html";
+            }
+        })
+    }
+</script>
+</html>

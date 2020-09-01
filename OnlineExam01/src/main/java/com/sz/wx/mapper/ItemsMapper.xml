@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.wx.dao.ItemsMapper">
+  <resultMap id="BaseResultMap" type="com.sz.wx.model.Items">
+    <id column="eId" jdbcType="INTEGER" property="eid" />
+    <result column="eName" jdbcType="VARCHAR" property="ename" />
+    <result column="ePaperId" jdbcType="INTEGER" property="epaperid" />
+    <result column="eScore" jdbcType="VARCHAR" property="escore" />
+    <result column="eType" jdbcType="INTEGER" property="etype" />
+    <result column="eDegree" jdbcType="INTEGER" property="edegree" />
+    <result column="ea" jdbcType="VARCHAR" property="ea" />
+    <result column="eb" jdbcType="VARCHAR" property="eb" />
+    <result column="ec" jdbcType="VARCHAR" property="ec" />
+    <result column="ed" jdbcType="VARCHAR" property="ed" />
+    <result column="ee" jdbcType="VARCHAR" property="ee" />
+    <result column="ef" jdbcType="VARCHAR" property="ef" />
+    <result column="eKey" jdbcType="VARCHAR" property="ekey" />
+    <result column="eHints" jdbcType="VARCHAR" property="ehints" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    eId, eName, ePaperId, eScore, eType, eDegree, ea, eb, ec, ed, ee, ef, eKey, eHints
+  </sql>
+  <select id="selectByExample" parameterType="com.sz.wx.model.ItemsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from exam_items
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exam_items
+    where eId = #{eid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from exam_items
+    where eId = #{eid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sz.wx.model.ItemsExample">
+    delete from exam_items
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sz.wx.model.Items">
+    insert into exam_items (eId, eName, ePaperId, 
+      eScore, eType, eDegree, 
+      ea, eb, ec, ed, 
+      ee, ef, eKey, eHints
+      )
+    values (#{eid,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, #{epaperid,jdbcType=INTEGER}, 
+      #{escore,jdbcType=VARCHAR}, #{etype,jdbcType=INTEGER}, #{edegree,jdbcType=INTEGER}, 
+      #{ea,jdbcType=VARCHAR}, #{eb,jdbcType=VARCHAR}, #{ec,jdbcType=VARCHAR}, #{ed,jdbcType=VARCHAR}, 
+      #{ee,jdbcType=VARCHAR}, #{ef,jdbcType=VARCHAR}, #{ekey,jdbcType=VARCHAR}, #{ehints,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sz.wx.model.Items">
+    insert into exam_items
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        eId,
+      </if>
+      <if test="ename != null">
+        eName,
+      </if>
+      <if test="epaperid != null">
+        ePaperId,
+      </if>
+      <if test="escore != null">
+        eScore,
+      </if>
+      <if test="etype != null">
+        eType,
+      </if>
+      <if test="edegree != null">
+        eDegree,
+      </if>
+      <if test="ea != null">
+        ea,
+      </if>
+      <if test="eb != null">
+        eb,
+      </if>
+      <if test="ec != null">
+        ec,
+      </if>
+      <if test="ed != null">
+        ed,
+      </if>
+      <if test="ee != null">
+        ee,
+      </if>
+      <if test="ef != null">
+        ef,
+      </if>
+      <if test="ekey != null">
+        eKey,
+      </if>
+      <if test="ehints != null">
+        eHints,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="ename != null">
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="epaperid != null">
+        #{epaperid,jdbcType=INTEGER},
+      </if>
+      <if test="escore != null">
+        #{escore,jdbcType=VARCHAR},
+      </if>
+      <if test="etype != null">
+        #{etype,jdbcType=INTEGER},
+      </if>
+      <if test="edegree != null">
+        #{edegree,jdbcType=INTEGER},
+      </if>
+      <if test="ea != null">
+        #{ea,jdbcType=VARCHAR},
+      </if>
+      <if test="eb != null">
+        #{eb,jdbcType=VARCHAR},
+      </if>
+      <if test="ec != null">
+        #{ec,jdbcType=VARCHAR},
+      </if>
+      <if test="ed != null">
+        #{ed,jdbcType=VARCHAR},
+      </if>
+      <if test="ee != null">
+        #{ee,jdbcType=VARCHAR},
+      </if>
+      <if test="ef != null">
+        #{ef,jdbcType=VARCHAR},
+      </if>
+      <if test="ekey != null">
+        #{ekey,jdbcType=VARCHAR},
+      </if>
+      <if test="ehints != null">
+        #{ehints,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sz.wx.model.ItemsExample" resultType="java.lang.Long">
+    select count(*) from exam_items
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update exam_items
+    <set>
+      <if test="record.eid != null">
+        eId = #{record.eid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ename != null">
+        eName = #{record.ename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.epaperid != null">
+        ePaperId = #{record.epaperid,jdbcType=INTEGER},
+      </if>
+      <if test="record.escore != null">
+        eScore = #{record.escore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.etype != null">
+        eType = #{record.etype,jdbcType=INTEGER},
+      </if>
+      <if test="record.edegree != null">
+        eDegree = #{record.edegree,jdbcType=INTEGER},
+      </if>
+      <if test="record.ea != null">
+        ea = #{record.ea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eb != null">
+        eb = #{record.eb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ec != null">
+        ec = #{record.ec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ed != null">
+        ed = #{record.ed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ee != null">
+        ee = #{record.ee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ef != null">
+        ef = #{record.ef,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ekey != null">
+        eKey = #{record.ekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ehints != null">
+        eHints = #{record.ehints,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update exam_items
+    set eId = #{record.eid,jdbcType=INTEGER},
+      eName = #{record.ename,jdbcType=VARCHAR},
+      ePaperId = #{record.epaperid,jdbcType=INTEGER},
+      eScore = #{record.escore,jdbcType=VARCHAR},
+      eType = #{record.etype,jdbcType=INTEGER},
+      eDegree = #{record.edegree,jdbcType=INTEGER},
+      ea = #{record.ea,jdbcType=VARCHAR},
+      eb = #{record.eb,jdbcType=VARCHAR},
+      ec = #{record.ec,jdbcType=VARCHAR},
+      ed = #{record.ed,jdbcType=VARCHAR},
+      ee = #{record.ee,jdbcType=VARCHAR},
+      ef = #{record.ef,jdbcType=VARCHAR},
+      eKey = #{record.ekey,jdbcType=VARCHAR},
+      eHints = #{record.ehints,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sz.wx.model.Items">
+    update exam_items
+    <set>
+      <if test="ename != null">
+        eName = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="epaperid != null">
+        ePaperId = #{epaperid,jdbcType=INTEGER},
+      </if>
+      <if test="escore != null">
+        eScore = #{escore,jdbcType=VARCHAR},
+      </if>
+      <if test="etype != null">
+        eType = #{etype,jdbcType=INTEGER},
+      </if>
+      <if test="edegree != null">
+        eDegree = #{edegree,jdbcType=INTEGER},
+      </if>
+      <if test="ea != null">
+        ea = #{ea,jdbcType=VARCHAR},
+      </if>
+      <if test="eb != null">
+        eb = #{eb,jdbcType=VARCHAR},
+      </if>
+      <if test="ec != null">
+        ec = #{ec,jdbcType=VARCHAR},
+      </if>
+      <if test="ed != null">
+        ed = #{ed,jdbcType=VARCHAR},
+      </if>
+      <if test="ee != null">
+        ee = #{ee,jdbcType=VARCHAR},
+      </if>
+      <if test="ef != null">
+        ef = #{ef,jdbcType=VARCHAR},
+      </if>
+      <if test="ekey != null">
+        eKey = #{ekey,jdbcType=VARCHAR},
+      </if>
+      <if test="ehints != null">
+        eHints = #{ehints,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where eId = #{eid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sz.wx.model.Items">
+    update exam_items
+    set eName = #{ename,jdbcType=VARCHAR},
+      ePaperId = #{epaperid,jdbcType=INTEGER},
+      eScore = #{escore,jdbcType=VARCHAR},
+      eType = #{etype,jdbcType=INTEGER},
+      eDegree = #{edegree,jdbcType=INTEGER},
+      ea = #{ea,jdbcType=VARCHAR},
+      eb = #{eb,jdbcType=VARCHAR},
+      ec = #{ec,jdbcType=VARCHAR},
+      ed = #{ed,jdbcType=VARCHAR},
+      ee = #{ee,jdbcType=VARCHAR},
+      ef = #{ef,jdbcType=VARCHAR},
+      eKey = #{ekey,jdbcType=VARCHAR},
+      eHints = #{ehints,jdbcType=VARCHAR}
+    where eId = #{eid,jdbcType=INTEGER}
+  </update>
+</mapper>
