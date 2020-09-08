@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>在线考试系统</title>
+    <link rel="icon" href="/img/title.ico" type="image/x-icon" />
+
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/layer/layer/theme/default/layer.css">
     <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
@@ -21,6 +23,8 @@
                 <button onclick="getPaperList()" type="button" class="btn btn-primary">查询</button>
                 <a href="/score.html" class='btn btn-warning pull-right'>我的试卷</a>
             </form>
+            <a href="/paper1.html" class="btn btn-danger">AngularJS页面</a>
+            <a href="/paper2.html" class="btn btn-danger">VueJS页面</a>
             <table class="table table-hover table-bordered table-striped text-center">
                 <tr>
                     <td>序号</td>
@@ -52,6 +56,9 @@
             data:JSON.stringify(d),
             contentType:"application/json;charset=UTF-8",
             dataType:"json",
+            headers:{
+                token:getCookie("token")
+            },
             success:function (data) {
                 let paper="";
                 $(data.list).each(function (i,v) {
@@ -71,6 +78,18 @@
                 window.location.href="/login.html";
             }
         })
+    }
+    function getCookie(cname){
+        if(document.cookie.length>0){
+            let cnameStart = document.cookie.indexOf(cname+"=");
+            if(cnameStart!=-1){
+                cnameStart = cnameStart+cname.length+1;
+                let cnameEnd = document.cookie.indexOf(";",cnameStart);
+                cnameEnd=cnameEnd==-1?document.cookie.length:cnameEnd;
+                return document.cookie.substring(cnameStart,cnameEnd);
+            }
+        }
+        return "";
     }
 </script>
 </html>

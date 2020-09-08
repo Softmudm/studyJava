@@ -6,6 +6,7 @@ import com.sz.wx.model.Items;
 import com.sz.wx.model.ItemsExample;
 import com.sz.wx.service.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class ItemsServiceImpl implements ItemsService {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    //这两个Template的区别是使用的序列化的类不同，上面的是String使用的，下面的会先序列化成字节数组再存进数据库。
+    //private RedisTemplate redisTemplate;
 
     //根据试卷id查对应的题目集合
     public List<Items> getItemsListByPaperid(int paperid){

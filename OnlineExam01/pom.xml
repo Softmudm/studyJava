@@ -11,7 +11,7 @@
     <groupId>com.sz</groupId>
     <artifactId>wx</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>OnlineExam</name>
+    <name>OnlineExam01</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -75,7 +75,7 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.73</version>
         </dependency>
-        <!-- swagger框架依赖 -->
+        <!-- swagger框架依赖(写接口文档的) -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -90,6 +90,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- jwt依赖(json_web_token令牌) -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.6.0</version>
         </dependency>
     </dependencies>
 

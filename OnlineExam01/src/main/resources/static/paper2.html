@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/layer/layer/theme/default/layer.css">
+    <script type="text/javascript" src="/js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/layer/layer/layer.js"></script>
+    <!-- 引入VueJS -->
+    <script type="text/javascript" src="/vuejs/vue.js"></script>
+</head>
+<body>
+<div id="vueTest" class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center" style="letter-spacing:30px;">
+            <h3>试卷列表</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline" style="margin-bottom: 10px">
+                <input v-model="paperName" class="form-control" placeholder="名称关键字">
+                <button @click="getPaperList" type="button" class="btn btn-primary">查询</button>
+                <a href="/static/score.html" class='btn btn-warning pull-right'>我的试卷</a>
+            </form>
+            <span>{{d.dname}}</span>
+            <table class="table table-hover table-bordered table-striped text-center">
+                <tr>
+                    <td>序号</td>
+                    <td>试卷编号</td>
+                    <td>试卷名称</td>
+                    <td>试卷分数</td>
+                    <td>创建时间</td>
+                    <td>操作</td>
+                </tr>
+                <tr v-for="(paper,index) in paperList">
+                    <td>{{index+1}}</td>
+                    <td>{{paper.paperid}}</td>
+                    <td>{{paper.papername}}</td>
+                    <td>{{paper.remarks}}</td>
+                    <td>{{paper.createtime}}</td>
+                    <td>
+                        <button>修改</button>
+                        <button>删除</button>
+                    </td>
+                </tr>
+                <ul class="pagination pull-right" style="margin: 0">
+                </ul>
+            </table>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var vm=new Vue({
+        el:"#vueTest",
+        data:{
+            paperName:"",
+            paperList:[],
+            d:{
+                dname:"数据绑定测试"
+            }
+        },
+        //自定义方法
+        methods:{
+            //查询试卷列表
+            getPaperList:function () {
+                let pageIndex=1;
+                let d={"pageIndex":pageIndex,"pageSize":5,"paperName":this.paperName}
+                $.ajax({
+                    url:"/paper/getPaperList",
+                    method:"POST",
+                    data:JSON.stringify(d),
+                    contentType:"application/json;charset=UTF-8",
+                    dataType:"json",
+                    success:(data)=>{
+                        this.paperList=data.list;
+                    },
+                    error:function (data) {
+                        layer.msg("Ajax请求错误！");
+                    }
+                })
+            }
+        },
+        //以下是Vue的生命周期钩子函数
+        beforeCreate:function(){
+            console.info("创建Vue实例前");
+        },
+        created:function () {
+            this.getPaperList();
+            console.info("创建Vue实例后");
+        },
+        beforeMount:function () {
+            console.info("挂载前");
+        },
+        mounted:function () {
+            console.info("挂载后");
+        },
+        beforeUpdate:function () {
+            console.info("更新数据前");
+        },
+        updated:function () {
+            console.info("更新数据后");
+        },
+        beforeDestroy:function () {
+            console.info("销毁前");
+        },
+        destroyed:function () {
+            console.info("销毁后");
+        }
+    })
+</script>
+</html>

@@ -6,10 +6,24 @@ spring:
     url: jdbc:mysql:///exam01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: root
+  thymeleaf:
+    cache: false
+
   redis:
-    host: localhost
     port: 6379
-    timeout: 3000 #超时时间
+    host: localhost
+  mvc:
+    static-path-pattern: /**
+#  redis:
+#    cluster:
+#      nodes:
+#        - 192.168.83.131:7001
+#        - 192.168.83.131:7002
+#        - 192.168.83.131:7003
+#        - 192.168.83.131:7004
+#        - 192.168.83.131:7005
+#        - 192.168.83.131:7006
+#      max-redirects: 3
 mybatis:
   mapper-locations: classpath:com/sz/wx/mapper/*.xml
 pagehelper:
