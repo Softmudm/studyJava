@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    config:
+      #gitee分支名字
+      label: master
+      #-前面的名字
+      name: user2
+      #-后面的名字
+      profile: dev
+      #springcloudconfig的服务器地址
+      uri: http://localhost:9994

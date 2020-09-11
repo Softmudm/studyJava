@@ -1,0 +1,24 @@
+server:
+  port: 9997
+#配置eureka服务器
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9999/eureka/
+  #这里是把ip注册到服务器，为false的话会使用主机名注册
+  instance:
+    prefer-ip-address: true
+#定义服务器中本服务的名称
+spring:
+  application:
+    name: eureka-client-paper
+  #配置数据源
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/exam01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
+mybatis:
+  mapper-locations: classpath:com/sz/paper/mapper/*.xml
+pagehelper:
+  helper-dialect: mysql
