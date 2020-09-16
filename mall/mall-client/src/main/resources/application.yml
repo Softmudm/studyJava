@@ -1,0 +1,28 @@
+server:
+  port: 9980
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9999/eureka/
+  instance:
+    prefer-ip-address: true #使用ip注册
+spring:
+  application:
+    name: client-client #服务名称
+  datasource: #数据源
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: dindan
+    password: 123456
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  main:
+    allow-bean-definition-overriding: true
+mybatis: #mybatis扫描xml路径
+  mapper-locations: classpath:com/sz/order/mapper/*.xml
+pagehelper: #配置分页插件
+  helper-dialect: oracle
+feign: #打开熔断器
+  hystrix:
+    enabled: true

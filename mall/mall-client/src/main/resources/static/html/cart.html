@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上商城</title>
+    <link rel="icon" href="../img/1.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../layer/theme/default/layer.css"/>
+
+    <!-- 引入AngularJS分页样式css -->
+    <link rel="stylesheet" href="../angularjs/pagination.css"/>
+
+    <script type="text/javascript" src="../js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../layer/layer.js"></script>
+
+    <!-- 引入AngularJS和分页js文件 -->
+    <script type="text/javascript" src="../angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="../angularjs/pagination.js"></script>
+    <style>
+        td{
+            vertical-align: middle !important;
+        }
+    </style>
+    <script>
+        var app=angular.module('cartApp',[]);
+        app.controller('cartController',function ($scope,$http) {
+            //查询购物车信息
+            $scope.doinit=function () {
+                $http({
+                    url:"/order/order/cart",
+                    method:"GET",
+                    //注意：！！！！这里用data会放在请求体@RequestParam拿不到
+                    //用params才是表单提交那种添加到url后面
+                    params:{},
+                    dataType:"json",
+                    headers:{
+                        token:getCookie("token")
+                    },
+                }).success(function (data) {
+                    let d;
+                    eval("d="+data.data);
+                    $scope.cartDetailMap=d.map;
+                    $scope.cartNum=d.cartNum;
+                    $scope.cartCount=d.cartCount;
+                })
+            }
+            //减去
+            $scope.addProduct=function (productId,count) {
+                $http({
+                    url:"/order/order/cart/"+productId+"/"+count,
+                    method:"POST",
+                    //注意：！！！！这里用data会放在请求体@RequestParam拿不到
+                    //用params才是表单提交那种添加到url后面
+                    params:{},
+                    dataType:"json",
+                    headers:{
+                        token:getCookie("token")
+                    },
+                }).success(function (data) {
+                    $scope.doinit();
+                })
+            }
+            $scope.goOrder=function () {
+                if(!$scope.cartDetailMap){
+                    layer.msg("购物车为空！",{icon:2,time:1500});
+                }else{
+                    window.location.href="order.html";
+                }
+            }
+        })
+        function getCookie(cname){
+            if(document.cookie.length>0){
+                let cnameStart = document.cookie.indexOf(cname+"=");
+                if(cnameStart!=-1){
+                    cnameStart = cnameStart+cname.length+1;
+                    let cnameEnd = document.cookie.indexOf(";",cnameStart);
+                    cnameEnd=cnameEnd==-1?document.cookie.length:cnameEnd;
+                    return document.cookie.substring(cnameStart,cnameEnd);
+                }
+            }
+            return "";
+        }
+    </script>
+</head>
+<body ng-app="cartApp" ng-controller="cartController" ng-init="doinit()">
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center" style="letter-spacing:30px;">
+            <h3>购物车</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover table-bordered table-striped table-condensed text-center">
+                <tr>
+                    <td>编号</td>
+                    <td>图片</td>
+                    <td>名称</td>
+                    <td>描述</td>
+                    <td>价格</td>
+                    <td>数量</td>
+                    <td>小计</td>
+                    <td>操作</td>
+                </tr>
+                <tr ng-repeat="(key,value) in cartDetailMap">
+                    <td>{{value.productId}}</td>
+                    <td><img width="100px" height="80px" ng-src="../img/{{value.productImg}}"></td>
+                    <td>{{value.productName}}</td>
+                    <td>{{value.description}}</td>
+                    <td>{{value.productPrice}}</td>
+                    <td>
+                        <button ng-click="addProduct(value.productId,-1)" class="btn btn-default btn-sm">-</button>
+                        {{value.detailNum}}
+                        <button ng-click="addProduct(value.productId,1)" class="btn btn-default btn-sm">+</button>
+                    </td>
+                    <td>{{value.detailCount}}</td>
+                    <td>
+                        <button ng-click="addProduct(value.productId,-99999)" class="btn btn-warning">从购物车中移除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                        共计：{{cartNum}}件， 总金额：{{cartCount}}元。
+                    </td>
+                </tr>
+            </table>
+            <a href="productList.html" class="btn btn-success btn-block">继续去购物</a>
+            <button ng-click="goOrder()" class="btn btn-danger btn-block">提交订单</button>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+</html>

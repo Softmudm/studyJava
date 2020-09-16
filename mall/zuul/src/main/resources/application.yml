@@ -1,0 +1,39 @@
+server:
+  port: 9998
+spring:
+  application:
+    name: zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9999/eureka/
+  instance:
+    prefer-ip-address: true
+zuul:
+  routes:
+    user-client:
+      path: /user/**
+      serviceId: user-client
+    product-client:
+      path: /product/**
+      serviceId: product-client
+    order-client:
+      path: /order/**
+      serviceId: order-client
+    client-client:
+      path: /client/**
+      serviceId: client-client
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
+  sensitive-headers:
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上商城</title>
+    <link rel="icon" href="../img/1.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../layer/theme/default/layer.css"/>
+
+    <!-- 引入AngularJS分页样式css -->
+    <link rel="stylesheet" href="../angularjs/pagination.css"/>
+
+    <script type="text/javascript" src="../js/jquery.min-1.12.4.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../layer/layer.js"></script>
+
+    <!-- 引入AngularJS和分页js文件 -->
+    <script type="text/javascript" src="../angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="../angularjs/pagination.js"></script>
+    <style>
+        form div{
+            margin-bottom: 15px;
+        }
+    </style>
+    <script>
+        var app=angular.module('loginApp',[]);
+        app.controller('loginController',function ($scope,$http) {
+            $scope.login=function () {
+                if($scope.account==""||$scope.password==""){
+                    layer.msg("账号密码不能为空！",{icon:7,time:1500});
+                }
+                $http({
+                    url:"/user/user/login",
+                    method:"POST",
+                    //注意：！！！！这里用data会放在请求体@RequestParam拿不到
+                    //用params才是表单提交那种添加到url后面
+                    params:{account:$scope.account,password:$scope.password},
+                    dataType:"json",
+                }).success(function (data) {
+                    if(data.status){
+                        console.info("登录成功");
+                        window.location.href="http://localhost:9998/client/html/productList.html";
+                    }else{
+                        layer.msg("账号密码不匹配！",{icon:2,time:1500});
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+<body ng-app="loginApp" ng-controller="loginController">
+<div class="container" style="width: 550px;margin-top: 100px">
+    <div class="panel panel-info">
+        <div class="panel-heading text-center" style="letter-spacing:30px;">
+            <h3>登录页面</h3>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="col-sm-8 col-sm-offset-2 input-group">
+                    <span class="input-group-addon">账号：</span>
+                    <input ng-model="account" type="text" class="form-control" placeholder="请输入账号">
+                </div>
+                <div class="col-sm-8 col-sm-offset-2 input-group">
+                    <span class="input-group-addon">密码：</span>
+                    <input ng-model="password" type="password" class="form-control"placeholder="请输入密码">
+                </div>
+            </form>
+            <div class="col-sm-8 col-sm-offset-2 input-group">
+                <button type="button" ng-click="login()" id="loginbtn" class="btn btn-block btn-primary" style="letter-spacing:30px;">登录</button>
+                <!--<a href="/regist.html" class="btn btn-block btn-warning" style="letter-spacing:30px;">注册</a>-->
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            Copyright © 2020 WX
+        </div>
+    </div>
+</div>
+</body>
+</html>
