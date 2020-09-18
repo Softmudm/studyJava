@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ActiveMQListener {
+    //destination这里是队列对象名称， containerFactory属性定义队列模式(jmsListenerContainerTopic/jmsListenerContainerQueue)
     @JmsListener(destination = "rrrr")
     public void getMessage(String message){
         try {
