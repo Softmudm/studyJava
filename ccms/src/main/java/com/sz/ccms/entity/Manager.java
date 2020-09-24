@@ -1,11 +1,10 @@
 package com.sz.ccms.entity;
 
 import tk.mybatis.mapper.annotation.KeySql;
+import tk.mybatis.mapper.code.ORDER;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 //@Table 建立实体类和表的对应关系
@@ -15,15 +14,16 @@ import java.util.Date;
 //       建立实体类和表的对应关系
 //@Transient标记非数据库表的字段
 @Table(name = "ccms_manager")
-public class Manager {
+public class Manager implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY,generator = "select UUID();")
-    String managerId;
-    String managerAccount;
-    String managerPassword;
-    String managerName;
-    Integer managerTel;
-    Date lastLoginDate;
+    @KeySql(sql = "SELECT REPLACE(UUID(),'-','')",order = ORDER.BEFORE)
+    private String managerId;
+    private String managerAccount;
+    private String managerPassword;
+    private String roleId;
+    private String managerName;
+    private Integer managerTel;
+    private Date lastLoginDate;
 
     public String getManagerId() {
         return managerId;
@@ -57,6 +57,14 @@ public class Manager {
         this.managerName = managerName;
     }
 
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
     public Integer getManagerTel() {
         return managerTel;
     }
@@ -71,5 +79,26 @@ public class Manager {
 
     public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
+    }
+
+    public Manager() {
+    }
+
+    public Manager(String managerAccount, String managerPassword) {
+        this.managerAccount = managerAccount;
+        this.managerPassword = managerPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "managerId='" + managerId + '\'' +
+                ", managerAccount='" + managerAccount + '\'' +
+                ", managerPassword='" + managerPassword + '\'' +
+                ", roleId='" + roleId + '\'' +
+                ", managerName='" + managerName + '\'' +
+                ", managerTel=" + managerTel +
+                ", lastLoginDate=" + lastLoginDate +
+                '}';
     }
 }

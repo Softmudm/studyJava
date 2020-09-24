@@ -1,9 +1,9 @@
 package com.sz.ccms.dao;
 
 import com.sz.ccms.entity.Manager;
+import com.sz.ccms.utils.BaseMapper;
 import org.springframework.stereotype.Repository;
-import tk.mybatis.mapper.common.Mapper;
 
 @Repository
-public interface ManagerDao extends Mapper<Manager> {
+public interface ManagerDao extends BaseMapper<Manager> {
 }

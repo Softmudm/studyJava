@@ -1,5 +1,8 @@
 package com.sz.ccms.utils;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -32,6 +35,6 @@ public class MD5Util {
     }
 
     public static void main(String[] args) {
-        System.out.println(md5("123"));
+        System.out.println(new SimpleHash("md5","123",ByteSource.Util.bytes("wx"),1));
     }
 }

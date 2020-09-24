@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.ccms.dao.RoleDao">
+    <select id="getRoleNameByPermissionId" parameterType="java.lang.String" resultType="java.lang.String">
+        select role_name roleName
+               from ccms_role_permission rp,ccms_role r
+               where rp.role_id=r.role_id and rp.permission_id=#{permissionId}
+    </select>
+</mapper>
