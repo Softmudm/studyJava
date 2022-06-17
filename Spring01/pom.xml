@@ -75,7 +75,7 @@
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
-      <version>1.2.73</version>
+      <version>1.2.83</version>
     </dependency>
     <!--Spring相关依赖-->
     <!--spring-core核心工具类，是其他组件的基本核心-->
